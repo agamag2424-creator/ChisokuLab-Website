@@ -39,6 +39,8 @@ const config: Config = {
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease-out",
         breathe: "breathe 3s ease-in-out infinite",
+        "accordion-down": "accordion-down 0.4s ease-out",
+        "accordion-up": "accordion-up 0.4s ease-out",
       },
       keyframes: {
         fadeInUp: {
@@ -58,6 +60,14 @@ const config: Config = {
           "50%": {
             transform: "scale(1.05)",
           },
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
     },
