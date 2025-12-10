@@ -50,7 +50,7 @@ export default function Header() {
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center" aria-label="ChisokuLab Home">
               <span className="text-2xl font-bold text-chisoku-navy">
                 ChisokuLab
               </span>

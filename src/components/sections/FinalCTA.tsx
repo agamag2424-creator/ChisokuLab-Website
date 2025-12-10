@@ -24,20 +24,48 @@ const trustBadges = [
 
 export default function FinalCTA() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<EmailFormData>({
     resolver: zodResolver(emailSchema),
   });
 
   const onSubmit = async (data: EmailFormData) => {
-    // TODO: Connect to API endpoint
-    console.log("Email submitted:", data.email);
-    setIsSubmitted(true);
-    // Reset form after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000);
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          source: "homepage-cta",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSubmitted(true);
+        reset();
+        // Reset success message after 5 seconds
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        // Handle error - you could add error state here
+        console.error("Subscription error:", result.error);
+        alert(result.error || "Failed to subscribe. Please try again.");
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+      alert("Failed to subscribe. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -84,7 +112,8 @@ export default function FinalCTA() {
                 variant="primary"
                 size="lg"
                 className="w-full"
-                isLoading={isSubmitted}
+                isLoading={isLoading}
+                disabled={isLoading || isSubmitted}
               >
                 {isSubmitted ? "Subscribed!" : "Get Started Free"}
               </Button>

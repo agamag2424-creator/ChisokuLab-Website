@@ -66,14 +66,15 @@ export default function Hero() {
             variants={zenVariants.fadeInUp}
             className="relative h-[400px] lg:h-[500px] flex items-center justify-center"
           >
-            <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 border border-chisoku-cyan-500/30 flex items-center justify-center">
+            <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 border border-chisoku-cyan-500/30 flex items-center justify-center" role="img" aria-label="AI and decision-making visualization">
               <div className="text-center space-y-4 p-8">
-                <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-2 border-chisoku-cyan-500/50 flex items-center justify-center">
+                <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-2 border-chisoku-cyan-500/50 flex items-center justify-center" aria-hidden="true">
                   <svg
                     className="w-16 h-16 text-chisoku-cyan-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -83,7 +84,7 @@ export default function Hero() {
                     />
                   </svg>
                 </div>
-                <p className="text-chisoku-cyan-500/70 text-sm font-medium">
+                <p className="text-chisoku-cyan-500/70 text-sm font-medium" aria-hidden="true">
                   Visual Placeholder
                 </p>
               </div>

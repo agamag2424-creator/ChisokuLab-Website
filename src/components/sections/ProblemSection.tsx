@@ -51,7 +51,7 @@ export default function ProblemSection() {
           </motion.div>
 
           {/* Problem Cards */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:items-stretch">
             {problems.map((problem, index) => {
               const Icon = problem.icon;
               return (
@@ -59,16 +59,17 @@ export default function ProblemSection() {
                   key={problem.title}
                   variants={zenVariants.staggerChild}
                   custom={index}
+                  className="flex"
                 >
-                  <Card variant="elevated" className="h-full group hover:border-chisoku-cyan-500 transition-colors duration-300">
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 rounded-lg bg-chisoku-cyan-50 flex items-center justify-center group-hover:bg-chisoku-cyan-500 transition-colors duration-300">
+                  <Card variant="elevated" className="flex flex-col h-full w-full group hover:border-chisoku-cyan-500 transition-colors duration-300">
+                    <div className="flex flex-col space-y-4 flex-grow">
+                      <div className="w-12 h-12 rounded-lg bg-chisoku-cyan-50 flex items-center justify-center group-hover:bg-chisoku-cyan-500 transition-colors duration-300 flex-shrink-0">
                         <Icon className="w-6 h-6 text-chisoku-cyan-500 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <h3 className="text-xl font-semibold text-chisoku-navy">
                         {problem.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed flex-grow">
                         {problem.description}
                       </p>
                     </div>

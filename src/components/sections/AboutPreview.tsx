@@ -18,10 +18,10 @@ export default function AboutPreview() {
             variants={zenVariants.fadeInUp}
             className="lg:col-span-2"
           >
-            <div className="relative aspect-square rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-square rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden" role="img" aria-label="Photo of Agam Agrawal, founder of ChisokuLab">
               <div className="text-center p-8">
-                <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-4 border-chisoku-cyan-500/30 mb-4" />
-                <p className="text-gray-600 font-medium">Photo of Agam</p>
+                <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-4 border-chisoku-cyan-500/30 mb-4" aria-hidden="true" />
+                <p className="text-gray-600 font-medium" aria-hidden="true">Photo of Agam</p>
               </div>
             </div>
           </motion.div>
