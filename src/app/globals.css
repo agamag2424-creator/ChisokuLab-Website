@@ -3,13 +3,47 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* ChisokuLab Brand Colors */
+  --chisoku-cyan-50: #E0F7FB;
+  --chisoku-cyan-100: #B3EDF5;
+  --chisoku-cyan-500: #00B0D0;
+  --chisoku-cyan-600: #009BB8;
+  --chisoku-cyan-900: #005A6E;
+  
+  --chisoku-navy-500: #0A1929;
+  --chisoku-navy-800: #040A11;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  /* ChisokuLab Cyan Colors */
+  --color-chisoku-cyan-50: var(--chisoku-cyan-50);
+  --color-chisoku-cyan-100: var(--chisoku-cyan-100);
+  --color-chisoku-cyan-500: var(--chisoku-cyan-500);
+  --color-chisoku-cyan-600: var(--chisoku-cyan-600);
+  --color-chisoku-cyan-900: var(--chisoku-cyan-900);
+  --color-chisoku-cyan: var(--chisoku-cyan-500);
+  
+  /* ChisokuLab Navy Colors */
+  --color-chisoku-navy-500: var(--chisoku-navy-500);
+  --color-chisoku-navy-800: var(--chisoku-navy-800);
+  --color-chisoku-navy: var(--chisoku-navy-500);
+  
+  /* Typography */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-merriweather), Georgia, serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  
+  /* Custom Spacing */
+  --spacing-section: 120px;
+  --spacing-section-mobile: 80px;
+  
+  /* Custom Shadows */
+  --shadow-zen: 0 4px 6px -1px rgba(0, 176, 208, 0.1), 0 2px 4px -1px rgba(0, 176, 208, 0.06);
+  --shadow-zen-lg: 0 10px 15px -3px rgba(0, 176, 208, 0.1), 0 4px 6px -2px rgba(0, 176, 208, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +56,20 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  body {
+    scroll-behavior: auto;
+  }
 }
