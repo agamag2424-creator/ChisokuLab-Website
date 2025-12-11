@@ -13,7 +13,7 @@ export const metadata = genMeta({
 
 export default function AboutPage() {
   return (
-    <>
+    <div>
       <AboutHero />
       <AboutStory />
       {/* CTA Section */}
@@ -33,7 +33,7 @@ export default function AboutPage() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

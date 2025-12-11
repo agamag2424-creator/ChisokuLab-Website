@@ -18,13 +18,13 @@ export default function ResourcesPage() {
   const popularPosts = blogPosts.slice(0, 6); // Top 6 posts
 
   return (
-    <>
+    <div>
       <ResourcesHero />
       <FeaturedGuide />
       <LatestVideos />
       <PopularArticles posts={popularPosts} />
       <FreeTemplates />
-    </>
+    </div>
   );
 }
 

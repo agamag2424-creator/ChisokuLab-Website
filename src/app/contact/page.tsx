@@ -84,7 +84,7 @@ export default function ContactPage() {
   };
 
   return (
-    <>
+    <div>
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-to-br from-chisoku-navy-500 via-chisoku-navy-600 to-chisoku-navy-800 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -266,6 +266,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
