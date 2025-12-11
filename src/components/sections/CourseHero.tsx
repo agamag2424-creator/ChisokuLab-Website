@@ -1,9 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { BookOpen, Clock, Users, Infinity } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { BookOpen, Clock, Users, Infinity, Star } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { zenVariants } from "@/lib/animations";
+import { getAverageRating } from "@/data/testimonials";
+import { enrollmentCount, getRandomRecentEnrollment, type RecentEnrollment } from "@/data/social-proof";
 
 const stats = [
   { icon: BookOpen, label: "12 Modules", value: "12" },
@@ -13,6 +16,19 @@ const stats = [
 ];
 
 export default function CourseHero() {
+  const [recentEnrollment, setRecentEnrollment] = useState<RecentEnrollment>(
+    getRandomRecentEnrollment()
+  );
+  const averageRating = getAverageRating();
+
+  // Rotate recent enrollment every 8 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRecentEnrollment(getRandomRecentEnrollment());
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToPricing = () => {
     const pricingSection = document.getElementById("pricing");
     if (pricingSection) {
@@ -53,6 +69,48 @@ export default function CourseHero() {
             make confident choices in the age of artificial intelligence. Stop
             reacting. Start leading.
           </motion.p>
+
+          {/* Social Proof Indicators */}
+          <motion.div
+            variants={zenVariants.staggerChild}
+            className="flex flex-col items-center gap-4 pt-6"
+          >
+            {/* Enrollment Count & Rating */}
+            <div className="flex flex-wrap items-center justify-center gap-6 text-white">
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-chisoku-cyan-500" />
+                <span className="text-lg font-semibold">
+                  {enrollmentCount} managers enrolled
+                </span>
+              </div>
+              <div className="hidden sm:block w-px h-6 bg-gray-600" />
+              <div className="flex items-center gap-2">
+                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <span className="text-lg font-semibold">
+                  {averageRating.toFixed(1)} avg. rating
+                </span>
+              </div>
+            </div>
+
+            {/* Recent Enrollment Ticker */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={recentEnrollment.name}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20"
+              >
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-sm text-gray-200">
+                  <span className="font-semibold">{recentEnrollment.name}</span> from{" "}
+                  <span className="font-semibold">{recentEnrollment.location}</span> enrolled{" "}
+                  {recentEnrollment.timeAgo}
+                </span>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
 
           {/* Stats Grid */}
           <motion.div

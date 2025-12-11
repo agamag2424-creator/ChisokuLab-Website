@@ -88,8 +88,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Logo Column */}
           <div className="space-y-4">
-            <Link href="/" className="inline-block" aria-label="ChisokuLab Home">
-              <span className="text-2xl font-bold">ChisokuLab</span>
+            <Link 
+              href="/" 
+              className="text-2xl font-bold text-white hover:text-chisoku-cyan-500 transition-colors inline-block" 
+              aria-label="ChisokuLab Home"
+            >
+              ChisokuLab
             </Link>
             <p className="text-sm text-gray-300 max-w-xs">
               AI efficiency training combined with Hindu decision science

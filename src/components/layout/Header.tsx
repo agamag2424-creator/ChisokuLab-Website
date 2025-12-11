@@ -49,11 +49,13 @@ export default function Header() {
       >
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center" aria-label="ChisokuLab Home">
-              <span className="text-2xl font-bold text-chisoku-navy">
-                ChisokuLab
-              </span>
+            {/* Logo - Text only */}
+            <Link 
+              href="/" 
+              className="text-2xl font-bold text-chisoku-navy hover:text-chisoku-cyan-500 transition-colors" 
+              aria-label="ChisokuLab Home"
+            >
+              ChisokuLab
             </Link>
 
             {/* Desktop Navigation */}
@@ -109,9 +111,13 @@ export default function Header() {
               className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl"
             >
               <div className="flex h-20 items-center justify-between px-6 border-b border-gray-200">
-                <span className="text-xl font-bold text-chisoku-navy">
+                <Link 
+                  href="/" 
+                  className="text-2xl font-bold text-chisoku-navy hover:text-chisoku-cyan-500 transition-colors" 
+                  aria-label="ChisokuLab Home"
+                >
                   ChisokuLab
-                </span>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
