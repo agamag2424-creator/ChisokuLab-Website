@@ -5,21 +5,34 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  // Filter out any posts with undefined or empty slugs
+  return posts
+    .filter((post) => post.slug && post.slug.trim() !== "")
+    .map((post) => ({
+      slug: post.slug,
+    }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
 }) {
-  const post = await getBlogPost(params.slug);
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
+  
+  if (!slug) {
+    return genMeta({
+      title: "Post Not Found",
+      path: "/blog",
+    });
+  }
+
+  const post = await getBlogPost(slug);
   if (!post) {
     return genMeta({
       title: "Post Not Found",
-      path: `/blog/${params.slug}`,
+      path: `/blog/${slug}`,
     });
   }
 
@@ -27,16 +40,23 @@ export async function generateMetadata({
     title: post.frontmatter.title,
     description: post.frontmatter.description,
     image: post.frontmatter.image || "/og-image.jpg",
-    path: `/blog/${params.slug}`,
+    path: `/blog/${slug}`,
   });
 }
 
 export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
 }) {
-  const post = await getBlogPost(params.slug);
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
+  
+  if (!slug) {
+    notFound();
+  }
+
+  const post = await getBlogPost(slug);
   if (!post) {
     notFound();
   }

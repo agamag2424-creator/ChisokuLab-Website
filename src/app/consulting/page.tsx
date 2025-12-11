@@ -15,7 +15,7 @@ export const metadata = genMeta({
 
 export default function ConsultingPage() {
   return (
-    <>
+    <div>
       <ConsultingHero />
       <WhoItsFor />
       <ServicesGrid />
@@ -37,7 +37,7 @@ export default function ConsultingPage() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

@@ -113,17 +113,33 @@ export function getAllBlogPosts(): BlogPost[] {
   const posts = fileNames
     .filter((name) => name.endsWith(".mdx"))
     .map((fileName) => {
-      const slug = fileName.replace(/\.mdx$/, "");
-      const fullPath = path.join(blogDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { data, content } = matter(fileContents);
+      try {
+        const slug = fileName.replace(/\.mdx$/, "");
+        if (!slug || slug.trim() === "") {
+          console.warn(`Skipping blog post with empty slug: ${fileName}`);
+          return null;
+        }
+        
+        const fullPath = path.join(blogDirectory, fileName);
+        if (!fs.existsSync(fullPath)) {
+          console.warn(`Blog post file not found: ${fullPath}`);
+          return null;
+        }
+        
+        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const { data, content } = matter(fileContents);
 
-      return {
-        slug,
-        frontmatter: data as BlogPostFrontmatter,
-        content,
-      };
+        return {
+          slug,
+          frontmatter: data as BlogPostFrontmatter,
+          content,
+        };
+      } catch (error) {
+        console.error(`Error processing blog post ${fileName}:`, error);
+        return null;
+      }
     })
+    .filter((post): post is BlogPost => post !== null)
     .sort((a, b) => {
       const dateA = new Date(a.frontmatter.date).getTime();
       const dateB = new Date(b.frontmatter.date).getTime();
