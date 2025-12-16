@@ -4,24 +4,21 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { zenVariants } from "@/lib/animations";
 
-const aiEfficiencyPoints = [
-  "Master the AI tools that actually matter",
-  "Build systematic workflows, not scattered experiments",
-  "Measure impact, not just activity",
-  "Deploy with confidence, not trial-and-error",
+const unifiedFrameworkPoints = [
+  "Practical AI integration strategies for modern workflows",
+  "Evidence-based decision-making frameworks tested across millennia",
+  "Daily practices for maintaining clarity under pressure",
+  "Team leadership tools for navigating technological change",
+  "Ethical guidelines for human-AI collaboration",
 ];
 
-const philosophyPoints = [
-  "Understand the three gunas (modes of nature)",
-  "Apply timeless decision frameworks",
-  "Cultivate inner clarity amid external chaos",
-  "Lead from wisdom, not reactivity",
+const businessFrameworkPoints = [
+  "Identify which decisions are yours vs. delegatable vs. automatable",
+  "Apply the 4-Question Clarity Filter to complex choices",
+  "Recognize when you're deciding from clarity vs. reaction",
+  "Build resilience through evidence-based daily practices",
+  "Create ethical boundaries for AI in your organization",
 ];
-
-const quote = {
-  text: "The wise see knowledge and action as one.",
-  source: "Bhagavad Gita 5.4",
-};
 
 export default function SolutionSection() {
   return (
@@ -40,28 +37,28 @@ export default function SolutionSection() {
             className="text-center max-w-3xl mx-auto"
           >
             <h2 className="text-3xl font-bold text-chisoku-navy sm:text-4xl lg:text-5xl">
-              The Solution: Two Pillars
+              The Solution: Integrated Decision Frameworks
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              AI efficiency meets timeless wisdom
+              Practical tools backed by 3,000 years of evidence
             </p>
           </motion.div>
 
-          {/* Two-Column Split */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
-            {/* Left: AI Efficiency */}
-            <motion.div
-              variants={zenVariants.staggerChild}
-              className="lg:pr-12 space-y-6"
-            >
+          {/* Unified Framework */}
+          <motion.div
+            variants={zenVariants.staggerChild}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-12 space-y-8">
               <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-chisoku-navy">
-                  AI Efficiency
+                <h3 className="text-xl font-semibold text-chisoku-navy mb-6">
+                  Our approach combines:
                 </h3>
                 <div className="w-16 h-1 bg-chisoku-cyan-500 rounded-full" />
               </div>
+              
               <ul className="space-y-4">
-                {aiEfficiencyPoints.map((point, index) => (
+                {unifiedFrameworkPoints.map((point, index) => (
                   <motion.li
                     key={index}
                     variants={zenVariants.staggerChild}
@@ -71,57 +68,32 @@ export default function SolutionSection() {
                     <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-chisoku-cyan-500 flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" />
                     </div>
-                    <span className="text-gray-700">{point}</span>
+                    <span className="text-gray-700 text-lg leading-relaxed">{point}</span>
                   </motion.li>
                 ))}
               </ul>
-            </motion.div>
 
-            {/* Center Divider */}
-            <div className="hidden lg:block relative">
-              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-chisoku-cyan-500 transform -translate-x-1/2" />
-            </div>
-
-            {/* Right: Hindu Philosophy */}
-            <motion.div
-              variants={zenVariants.staggerChild}
-              className="lg:pl-12 space-y-6"
-            >
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-chisoku-navy">
-                  Hindu Decision Science
-                </h3>
-                <div className="w-16 h-1 bg-amber-500 rounded-full" />
+              <div className="pt-6 border-t border-gray-200 mt-8">
+                <h4 className="text-lg font-semibold text-chisoku-navy mb-4">
+                  You'll learn to:
+                </h4>
+                <ul className="space-y-3">
+                  {businessFrameworkPoints.map((point, index) => (
+                    <motion.li
+                      key={index}
+                      variants={zenVariants.staggerChild}
+                      custom={index + unifiedFrameworkPoints.length}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-chisoku-cyan-500 flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                      <span className="text-gray-700 leading-relaxed">{point}</span>
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-4">
-                {philosophyPoints.map((point, index) => (
-                  <motion.li
-                    key={index}
-                    variants={zenVariants.staggerChild}
-                    custom={index + 4}
-                    className="flex items-start gap-3"
-                  >
-                    <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-amber-500 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                    <span className="text-gray-700">{point}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Quote Below */}
-          <motion.div
-            variants={zenVariants.fadeInUp}
-            className="text-center max-w-2xl mx-auto pt-8 border-t border-gray-200"
-          >
-            <blockquote className="text-xl font-serif text-chisoku-navy italic">
-              "{quote.text}"
-            </blockquote>
-            <cite className="mt-2 block text-sm text-gray-500 not-italic">
-              — {quote.source}
-            </cite>
+            </div>
           </motion.div>
         </motion.div>
       </div>

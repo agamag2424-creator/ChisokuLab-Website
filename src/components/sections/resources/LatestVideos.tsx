@@ -21,9 +21,9 @@ const videos = [
     duration: "15:20",
   },
   {
-    title: "The Bhagavad Gita and Modern Leadership",
+    title: "Ancient Decision Frameworks for Modern Leaders",
     description:
-      "Exploring how ancient wisdom from the Bhagavad Gita applies to leadership in the age of AI.",
+      "Exploring how time-tested frameworks (used by leaders for 3,000 years) apply to AI-era leadership challenges.",
     youtubeId: "placeholder-3",
     duration: "18:45",
   },
@@ -49,7 +49,7 @@ export default function LatestVideos() {
               Latest Videos
             </h2>
             <p className="text-lg text-gray-600">
-              Watch our latest videos on AI efficiency, decision science, and
+              Watch our latest videos on AI efficiency, decision-making, and
               leadership.
             </p>
           </motion.div>

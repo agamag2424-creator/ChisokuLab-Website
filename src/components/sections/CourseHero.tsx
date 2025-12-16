@@ -2,17 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Clock, Users, Infinity, Star } from "lucide-react";
+import { BookOpen, Clock, Users, Infinity, Star, RefreshCw } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { zenVariants } from "@/lib/animations";
 import { getAverageRating } from "@/data/testimonials";
 import { enrollmentCount, getRandomRecentEnrollment, type RecentEnrollment } from "@/data/social-proof";
 
 const stats = [
-  { icon: BookOpen, label: "12 Modules", value: "12" },
-  { icon: Clock, label: "30+ Hours", value: "30+" },
-  { icon: Users, label: "6 Months Support", value: "6" },
+  { icon: BookOpen, label: "Modules", value: "7" },
+  { icon: Clock, label: "Hours", value: "~4" },
   { icon: Infinity, label: "Lifetime Access", value: "∞" },
+  { icon: RefreshCw, label: "Updates Forever", value: "Free" },
 ];
 
 export default function CourseHero() {
@@ -48,7 +48,7 @@ export default function CourseHero() {
           {/* Badge */}
           <motion.div variants={zenVariants.staggerChild}>
             <span className="inline-block px-4 py-2 rounded-full bg-chisoku-cyan-500/20 border border-chisoku-cyan-500/30 text-chisoku-cyan-500 text-sm font-medium">
-              12-Module Comprehensive Course
+              7-Module Decision Framework Course
             </span>
           </motion.div>
 
@@ -65,9 +65,9 @@ export default function CourseHero() {
             variants={zenVariants.staggerChild}
             className="text-lg text-gray-300 sm:text-xl lg:text-2xl max-w-3xl mx-auto"
           >
-            Master AI efficiency tools and Hindu decision science frameworks to
-            make confident choices in the age of artificial intelligence. Stop
-            reacting. Start leading.
+            Evidence-based decision frameworks for modern managers. Make confident
+            choices in the age of artificial intelligence. Stop reacting. Start
+            leading.
           </motion.p>
 
           {/* Social Proof Indicators */}

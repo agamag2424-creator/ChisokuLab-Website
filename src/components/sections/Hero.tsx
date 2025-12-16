@@ -37,9 +37,9 @@ export default function Hero() {
             {/* Subheadline with fade-in */}
             <motion.p
               variants={zenVariants.fadeInUp}
-              className="text-lg text-gray-300 sm:text-xl lg:text-2xl max-w-xl"
+              className="text-lg text-gray-300 leading-relaxed sm:text-xl lg:text-2xl max-w-xl"
             >
-              Master AI efficiency and Hindu decision science. Make confident
+              Evidence-based decision frameworks for modern managers. Make confident
               choices in the age of artificial intelligence. Stop reacting. Start
               leading.
             </motion.p>
@@ -70,7 +70,7 @@ export default function Hero() {
             <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/hero-image.png"
-                alt="AI efficiency and decision science visualization"
+                alt="AI efficiency and decision frameworks visualization"
                 fill
                 className="object-cover object-center"
                 priority

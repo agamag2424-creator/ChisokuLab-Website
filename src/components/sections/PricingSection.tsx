@@ -7,12 +7,12 @@ import Button from "@/components/ui/Button";
 import { zenVariants } from "@/lib/animations";
 
 const features = [
-  "12 comprehensive modules",
-  "30+ hours of video content",
-  "All templates and frameworks",
-  "6 months of community access",
-  "Lifetime course access",
+  "7 focused decision framework modules",
+  "~4 hours of video content (binge-able or self-paced)",
+  "All templates, worksheets, and frameworks",
+  "Lifetime course access and updates",
   "Monthly live Q&A sessions",
+  "Private community access",
   "Certificate of completion",
   "30-day money-back guarantee",
 ];

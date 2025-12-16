@@ -18,9 +18,8 @@ export default function ResourcesHero() {
               Start Learning Now
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              Free guides, templates, videos, and articles to help you master
-              AI efficiency and decision science. No email required to get
-              started.
+              Free guides, templates, videos, and articles to help you make
+              better decisions in the AI era. No email required to get started.
             </p>
           </motion.div>
         </motion.div>

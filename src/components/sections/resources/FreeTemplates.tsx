@@ -15,7 +15,7 @@ const templates = [
   {
     title: "Decision-Making Framework Template",
     description:
-      "A structured template for making important decisions. Based on Chisoku principles, helps you think through options systematically.",
+      "A structured template for making important decisions. Uses a proven 4-question framework to help you think through options systematically and avoid common decision-making pitfalls.",
     icon: FileText,
   },
   {

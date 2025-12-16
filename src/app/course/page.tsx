@@ -3,32 +3,20 @@ import CurriculumSection from "@/components/sections/CurriculumSection";
 import CourseFormatSection from "@/components/sections/CourseFormatSection";
 import PricingSection from "@/components/sections/PricingSection";
 import FinalCTA from "@/components/sections/FinalCTA";
-import { getAllModules } from "@/lib/mdx";
 import { generateMetadata as genMeta } from "@/lib/seo";
 
 export const metadata = genMeta({
   title: "Course - Calm Amid AI Chaos",
   description:
-    "Master AI efficiency and Hindu decision science. 12 comprehensive modules designed to transform your approach to AI and decision-making. Enroll now.",
+    "Evidence-based decision frameworks for modern managers. 7 focused modules teaching practical decision-making skills for AI-era leadership. Enroll now.",
   path: "/course",
 });
 
 export default function CoursePage() {
-  const allModules = getAllModules();
-  const efficiencyModules = allModules.filter(
-    (m) => m.frontmatter.category === "efficiency"
-  );
-  const philosophyModules = allModules.filter(
-    (m) => m.frontmatter.category === "philosophy"
-  );
-
   return (
     <>
       <CourseHero />
-      <CurriculumSection
-        efficiencyModules={efficiencyModules}
-        philosophyModules={philosophyModules}
-      />
+      <CurriculumSection />
       <CourseFormatSection />
       <PricingSection />
       <FinalCTA />

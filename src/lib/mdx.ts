@@ -87,7 +87,7 @@ export interface BlogPostFrontmatter {
   title: string;
   description: string;
   date: string;
-  category: "AI Tools" | "Decision Science" | "Philosophy" | "Enterprise";
+  category: "AI Tools" | "Decision Science" | "Philosophy" | "Enterprise" | "Leadership";
   author: string;
   readTime: number;
   featured?: boolean;

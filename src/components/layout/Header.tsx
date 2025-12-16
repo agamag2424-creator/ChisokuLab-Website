@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { zenVariants } from "@/lib/animations";
+import Button from "@/components/ui/Button";
 
 const navigation = [
   { name: "Course", href: "/course" },
@@ -70,6 +71,11 @@ export default function Header() {
                   <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-chisoku-cyan-500 transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
+              <Link href="/sign-up">
+                <Button variant="ghost" size="sm" className="ml-4">
+                  Sign up
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -149,6 +155,20 @@ export default function Header() {
                       </Link>
                     </motion.div>
                   ))}
+                  <motion.div
+                    variants={zenVariants.staggerChild}
+                    custom={navigation.length}
+                  >
+                    <Link
+                      href="/sign-up"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="mt-4"
+                    >
+                      <Button variant="ghost" size="sm" className="w-full">
+                        Sign up
+                      </Button>
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </nav>
             </motion.div>

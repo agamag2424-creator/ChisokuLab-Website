@@ -96,8 +96,8 @@ export default function Footer() {
               ChisokuLab
             </Link>
             <p className="text-sm text-gray-300 max-w-xs">
-              AI efficiency training combined with Hindu decision science
-              philosophy. Calm amid AI chaos.
+              Evidence-based decision frameworks for modern leaders. Make confident
+              choices in the age of artificial intelligence.
             </p>
           </div>
 
