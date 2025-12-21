@@ -34,3 +34,25 @@ export function generateFAQSchema(faqs: FAQCategory[]): object {
   };
 }
 
+/**
+ * Generate FAQPage JSON-LD schema from flat FAQ items array
+ */
+export function generateFAQSchemaFromItems(
+  items: Array<{ question: string; answer: string }>
+): object {
+  const mainEntity = items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: mainEntity,
+  };
+}
+
