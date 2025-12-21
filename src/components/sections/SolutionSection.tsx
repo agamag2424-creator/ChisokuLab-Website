@@ -45,10 +45,10 @@ export default function SolutionSection() {
           </motion.div>
 
           {/* Unified Framework */}
-          <motion.div
-            variants={zenVariants.staggerChild}
+            <motion.div
+              variants={zenVariants.staggerChild}
             className="max-w-4xl mx-auto"
-          >
+            >
             <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-12 space-y-8">
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-chisoku-navy mb-6">
@@ -79,21 +79,21 @@ export default function SolutionSection() {
                 </h4>
                 <ul className="space-y-3">
                   {businessFrameworkPoints.map((point, index) => (
-                    <motion.li
-                      key={index}
-                      variants={zenVariants.staggerChild}
+                  <motion.li
+                    key={index}
+                    variants={zenVariants.staggerChild}
                       custom={index + unifiedFrameworkPoints.length}
-                      className="flex items-start gap-3"
-                    >
+                    className="flex items-start gap-3"
+                  >
                       <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-chisoku-cyan-500 flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
                       <span className="text-gray-700 leading-relaxed">{point}</span>
-                    </motion.li>
-                  ))}
-                </ul>
+                  </motion.li>
+                ))}
+              </ul>
               </div>
-            </div>
+          </div>
           </motion.div>
         </motion.div>
       </div>

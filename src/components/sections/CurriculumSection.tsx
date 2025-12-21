@@ -122,12 +122,12 @@ export default function CurriculumSection() {
                     <div className="space-y-4 pt-2 pb-4 pl-16">
                       <p className="text-gray-700 leading-relaxed">
                         {module.description}
-                      </p>
-                      <div className="bg-chisoku-cyan-50 border border-chisoku-cyan-200 rounded-lg p-4">
-                        <p className="text-sm font-medium text-chisoku-cyan-900 mb-1">
+                                  </p>
+                        <div className="bg-chisoku-cyan-50 border border-chisoku-cyan-200 rounded-lg p-4">
+                          <p className="text-sm font-medium text-chisoku-cyan-900 mb-1">
                           Deliverables:
-                        </p>
-                        <p className="text-chisoku-cyan-700">
+                          </p>
+                          <p className="text-chisoku-cyan-700">
                           {module.deliverables}
                         </p>
                       </div>

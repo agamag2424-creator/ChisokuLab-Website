@@ -7,7 +7,7 @@ import Link from "next/link";
 export const metadata = genMeta({
   title: "About ChisokuLab",
   description:
-    "Learn about ChisokuLab's mission to combine AI efficiency training with Hindu decision science philosophy. Discover why we built this and what we believe.",
+    "Learn about ChisokuLab's mission to teach evidence-based decision frameworks for modern managers. Discover how we help leaders make confident choices in the age of AI.",
   path: "/about",
 });
 
@@ -23,8 +23,8 @@ export default function AboutPage() {
             Ready to Transform Your Approach?
           </h2>
           <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-            Explore our comprehensive course that combines AI efficiency with
-            timeless decision science.
+            Explore our comprehensive course that teaches evidence-based decision
+            frameworks for the AI era.
           </p>
           <Link href="/course">
             <Button variant="primary" size="lg">

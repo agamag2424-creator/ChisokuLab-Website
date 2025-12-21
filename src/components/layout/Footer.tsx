@@ -96,7 +96,7 @@ export default function Footer() {
               ChisokuLab
             </Link>
             <p className="text-sm text-gray-300 max-w-xs">
-              Evidence-based decision frameworks for modern leaders. Make confident
+              Evidence-based decision frameworks for modern leaders. make confident
               choices in the age of artificial intelligence.
             </p>
           </div>

@@ -39,7 +39,7 @@ export default function Hero() {
               variants={zenVariants.fadeInUp}
               className="text-lg text-gray-300 leading-relaxed sm:text-xl lg:text-2xl max-w-xl"
             >
-              Evidence-based decision frameworks for modern managers. Make confident
+              Evidence-based decision frameworks for modern managers. make confident
               choices in the age of artificial intelligence. Stop reacting. Start
               leading.
             </motion.p>

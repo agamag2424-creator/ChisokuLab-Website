@@ -42,9 +42,10 @@ export default function AboutHero() {
               About ChisokuLab
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              We combine AI efficiency training with Hindu decision science
-              philosophy to help managers make confident choices in the age of
-              artificial intelligence.
+              We teach evidence-based decision frameworks that help managers make
+              confident choices in the age of artificial intelligence. Our approach
+              combines practical AI integration strategies with frameworks that have
+              guided leaders for 3,000 years.
             </p>
           </motion.div>
         </motion.div>

@@ -65,7 +65,7 @@ export default function CourseHero() {
             variants={zenVariants.staggerChild}
             className="text-lg text-gray-300 sm:text-xl lg:text-2xl max-w-3xl mx-auto"
           >
-            Evidence-based decision frameworks for modern managers. Make confident
+            Evidence-based decision frameworks for modern managers. make confident
             choices in the age of artificial intelligence. Stop reacting. Start
             leading.
           </motion.p>

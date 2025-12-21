@@ -9,8 +9,8 @@ export async function generateStaticParams() {
   return posts
     .filter((post) => post.slug && post.slug.trim() !== "")
     .map((post) => ({
-      slug: post.slug,
-    }));
+    slug: post.slug,
+  }));
 }
 
 export async function generateMetadata({
