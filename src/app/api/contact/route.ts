@@ -11,9 +11,6 @@ const contactSchema = z.object({
   website: z.string().max(0, "Spam detected").optional(),
 });
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-const TO_EMAIL = process.env.CONTACT_EMAIL || "hello@chisokulab.com";
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -46,8 +43,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Read environment variables at runtime (required for Vercel serverless functions)
+    const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+    const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+    const TO_EMAIL = process.env.CONTACT_EMAIL || "hello@chisokulab.com";
+
     // Check if API key is configured
-    if (!process.env.RESEND_API_KEY) {
+    if (!RESEND_API_KEY) {
       console.error("RESEND_API_KEY is not configured");
       return NextResponse.json(
         {
@@ -59,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Initialize Resend client only at runtime when API key is available
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(RESEND_API_KEY);
 
     // Helper function to escape HTML
     const escapeHtml = (text: string) => {

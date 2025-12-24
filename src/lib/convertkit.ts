@@ -3,8 +3,6 @@
  * Handles email subscriptions to ConvertKit
  */
 
-const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY;
-const CONVERTKIT_FORM_ID = process.env.CONVERTKIT_FORM_ID;
 const CONVERTKIT_API_URL = "https://api.convertkit.com/v3";
 
 export interface ConvertKitResponse {
@@ -40,6 +38,10 @@ export interface SubscribeOptions {
 export async function subscribeToNewsletter(
   options: SubscribeOptions
 ): Promise<{ success: boolean; data?: ConvertKitResponse; error?: string }> {
+  // Read environment variables at runtime (required for Vercel serverless functions)
+  const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY || '';
+  const CONVERTKIT_FORM_ID = process.env.CONVERTKIT_FORM_ID || '';
+
   // Log configuration status (without exposing full API key)
   console.log("ConvertKit Config Check:", {
     hasApiKey: !!CONVERTKIT_API_KEY,
