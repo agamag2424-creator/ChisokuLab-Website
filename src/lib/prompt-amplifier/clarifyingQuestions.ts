@@ -3,9 +3,6 @@
  * Generates clarifying questions for vague inputs using Gemini/Groq APIs
  */
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
-
 export interface ClarifyingQuestion {
   id: string;
   question: string;
@@ -34,6 +31,8 @@ Return ONLY valid JSON array, no other text. Generate 3-4 relevant clarifying qu
 }
 
 async function callGeminiAPIForQuestions(prompt: string): Promise<string> {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
+  
   if (!GEMINI_API_KEY) {
     throw new Error('Gemini API key not configured');
   }
@@ -93,6 +92,8 @@ async function callGeminiAPIForQuestions(prompt: string): Promise<string> {
 }
 
 async function callGroqAPIForQuestions(prompt: string): Promise<string> {
+  const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
+  
   if (!GROQ_API_KEY) {
     throw new Error('Groq API key not configured');
   }
@@ -224,6 +225,18 @@ export async function generateClarifyingQuestions(
   if (!userInput || userInput.trim().length === 0) {
     return { questions: [], source: 'template' };
   }
+
+  // Read API keys at runtime (required for Vercel serverless functions)
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
+  const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
+
+  // Debug logging (remove in production if needed)
+  console.log('API Keys check (questions):', {
+    hasGemini: !!GEMINI_API_KEY,
+    hasGroq: !!GROQ_API_KEY,
+    geminiLength: GEMINI_API_KEY?.length || 0,
+    groqLength: GROQ_API_KEY?.length || 0
+  });
 
   // Try Gemini API first
   if (GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here') {
