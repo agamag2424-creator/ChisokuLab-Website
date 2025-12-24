@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock, Twitter, Linkedin, Copy, Check } from "lucide-react";
 import Card from "@/components/ui/Card";
@@ -63,12 +64,25 @@ export default function BlogPostTemplate({
     <div className="min-h-screen bg-white">
       {/* Hero Image */}
       <section className="relative h-[400px] md:h-[500px] bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-4 border-chisoku-cyan-500/30 mb-4" />
-            <p className="text-gray-600 font-medium">Hero Image</p>
+        {post.frontmatter.image ? (
+          <div className="relative w-full h-full">
+            <Image
+              src={post.frontmatter.image}
+              alt={post.frontmatter.title}
+              fill
+              className="object-cover object-center"
+              priority
+              sizes="100vw"
+            />
           </div>
-        </div>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-4 border-chisoku-cyan-500/30 mb-4" />
+              <p className="text-gray-600 font-medium">Hero Image</p>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Article Content */}
@@ -146,7 +160,7 @@ export default function BlogPostTemplate({
 
               {/* Body Content */}
               <div
-                className="prose prose-lg max-w-none prose-headings:text-chisoku-navy prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-chisoku-cyan-500 prose-a:no-underline hover:prose-a:underline prose-strong:text-chisoku-navy prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-gray-700"
+                className="blog-content max-w-none"
                 dangerouslySetInnerHTML={{ __html: post.htmlContent || "" }}
               />
             </article>
@@ -213,4 +227,3 @@ export default function BlogPostTemplate({
     </div>
   );
 }
-

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import Card from "@/components/ui/Card";
@@ -60,8 +61,20 @@ export default function PopularArticles({ posts }: PopularArticlesProps) {
                 <Link href={`/blog/${post.slug}`}>
                   <Card variant="elevated" className="h-full group hover:border-chisoku-cyan-500 transition-colors">
                     <div className="space-y-4">
-                      <div className="aspect-video rounded-lg bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full bg-chisoku-cyan-500/20 border-2 border-chisoku-cyan-500/30" />
+                      <div className="aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 relative">
+                        {post.frontmatter.image ? (
+                          <Image
+                            src={post.frontmatter.image}
+                            alt={post.frontmatter.title}
+                            fill
+                            className="object-cover object-center"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-chisoku-cyan-500/20 border-2 border-chisoku-cyan-500/30" />
+                          </div>
+                        )}
                       </div>
                       <div className="inline-block px-3 py-1 rounded-full bg-chisoku-cyan-50 text-chisoku-cyan-600 text-sm font-medium">
                         {post.frontmatter.category}

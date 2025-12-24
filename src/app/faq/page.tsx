@@ -43,7 +43,7 @@ const faqs = [
       {
         question: "When do consulting services launch?",
         answer:
-          "Our Enterprise AI Deployment Advisory services are launching in Q1 2025. Join the waitlist to get early access and a free consultation when we launch.",
+          "Our Enterprise AI Deployment Advisory services are launching in Q1 2026. Join the waitlist to get early access and a free consultation when we launch.",
       },
       {
         question: "What types of organizations do you work with?",

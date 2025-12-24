@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata = genMeta({
   title: "Enterprise AI Deployment Advisory",
   description:
-    "Deploy AI tools across your organization without the trial-and-error tax. Get expert guidance on readiness, strategy, and governance. Launching Q1 2025.",
+    "Deploy AI tools across your organization without the trial-and-error tax. Get expert guidance on readiness, strategy, and governance. Launching Q1 2026.",
   path: "/consulting",
 });
 

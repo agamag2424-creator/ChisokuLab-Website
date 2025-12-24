@@ -536,7 +536,7 @@ Acceptance Criteria: [How to verify completion]
 - Time: 2hrs
 - Dependencies: TASK-013, TASK-011
 - Create `app/consulting/waitlist/page.tsx`:
-  - Hero: "Enterprise AI Deployment Advisory – Launching Q1 2025"
+  - Hero: "Enterprise AI Deployment Advisory – Launching Q1 2026"
   - Subheadline (placeholder)
   - 3 bullet points: What's coming (Readiness Assessment, Deployment Strategy, Governance)
   - Email capture form

@@ -98,7 +98,7 @@ export default function ConsultingWaitlistPage() {
               Enterprise AI Deployment Advisory
             </h1>
             <p className="text-xl text-gray-300 sm:text-2xl">
-              Launching Q1 2025
+              Launching Q1 2026
             </p>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Deploy AI tools across your organization without the trial-and-error

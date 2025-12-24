@@ -13,7 +13,7 @@ describe('Consulting Waitlist Page', () => {
   it('should render hero section', () => {
     render(<ConsultingWaitlistPage />)
     expect(screen.getByText(/enterprise ai deployment advisory/i)).toBeInTheDocument()
-    expect(screen.getByText(/launching q1 2025/i)).toBeInTheDocument()
+    expect(screen.getByText(/launching q1 2026/i)).toBeInTheDocument()
   })
 
   it('should render feature cards', () => {
