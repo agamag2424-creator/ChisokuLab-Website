@@ -40,6 +40,14 @@ export interface SubscribeOptions {
 export async function subscribeToNewsletter(
   options: SubscribeOptions
 ): Promise<{ success: boolean; data?: ConvertKitResponse; error?: string }> {
+  // Log configuration status (without exposing full API key)
+  console.log("ConvertKit Config Check:", {
+    hasApiKey: !!CONVERTKIT_API_KEY,
+    apiKeyPrefix: CONVERTKIT_API_KEY?.substring(0, 5) || "none",
+    hasFormId: !!CONVERTKIT_FORM_ID,
+    formId: CONVERTKIT_FORM_ID || "none",
+  });
+
   if (!CONVERTKIT_API_KEY || !CONVERTKIT_FORM_ID) {
     console.warn(
       "ConvertKit API key or Form ID not configured. Using mock response."
@@ -70,6 +78,7 @@ export async function subscribeToNewsletter(
   }
 
   try {
+    console.log("Attempting ConvertKit subscription for:", options.email);
     const formData = new URLSearchParams();
     formData.append("api_key", CONVERTKIT_API_KEY);
     formData.append("email", options.email);
@@ -86,25 +95,38 @@ export async function subscribeToNewsletter(
       });
     }
 
-    const response = await fetch(
-      `${CONVERTKIT_API_URL}/forms/${CONVERTKIT_FORM_ID}/subscribe`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData.toString(),
-      }
-    );
+    const apiUrl = `${CONVERTKIT_API_URL}/forms/${CONVERTKIT_FORM_ID}/subscribe`;
+    console.log("ConvertKit API URL:", apiUrl);
+    console.log("Request body (sanitized):", {
+      email: options.email,
+      source: options.source,
+      hasApiKey: !!formData.get("api_key"),
+    });
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    });
+
+    console.log("ConvertKit API Response Status:", response.status, response.statusText);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      console.error("ConvertKit API Error Response:", errorData);
       throw new Error(
         errorData.message || `ConvertKit API error: ${response.statusText}`
       );
     }
 
     const data: ConvertKitResponse = await response.json();
+    console.log("ConvertKit API Success Response:", {
+      subscriptionId: data.subscription?.id,
+      subscriberId: data.subscription?.subscriber?.id,
+      email: data.subscription?.subscriber?.email_address,
+    });
 
     return {
       success: true,

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { zenVariants } from "@/lib/animations";
 
@@ -11,32 +12,34 @@ export default function AboutHero() {
           initial="initial"
           animate="animate"
           variants={zenVariants.staggerContainer}
-          className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center"
+          className="flex flex-col items-center gap-12"
         >
-          {/* Left: Photo */}
+          {/* Image at top */}
           <motion.div
             variants={zenVariants.staggerChild}
-            className="order-2 lg:order-1"
+            className="w-full max-w-[800px]"
           >
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 shadow-2xl">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-48 h-48 mx-auto rounded-full bg-chisoku-cyan-500/20 border-4 border-chisoku-cyan-500/30 mb-6" />
-                  <p className="text-gray-600 font-medium text-lg">
-                    Photo of Agam Agrawal
-                  </p>
-                  <p className="text-gray-500 text-sm mt-2">
-                    Founder, ChisokuLab
-                  </p>
-                </div>
-              </div>
+            <div 
+              className="relative w-full rounded-xl overflow-hidden"
+              style={{
+                boxShadow: '0 8px 32px rgba(0, 176, 208, 0.2), 0 4px 16px rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <Image
+                src="/images/about-hero-focused.png"
+                alt="About ChisokuLab"
+                width={1200}
+                height={950}
+                className="w-full h-auto object-contain"
+                priority
+              />
             </div>
           </motion.div>
 
-          {/* Right: Headline */}
+          {/* Heading and description below */}
           <motion.div
             variants={zenVariants.staggerChild}
-            className="order-1 lg:order-2 text-center lg:text-left"
+            className="text-center max-w-4xl"
           >
             <h1 className="text-4xl font-bold text-white sm:text-5xl lg:text-6xl mb-6">
               About ChisokuLab
