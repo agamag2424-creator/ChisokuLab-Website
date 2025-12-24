@@ -59,7 +59,25 @@ async function callGeminiAPIForQuestions(prompt: string): Promise<string> {
   });
 
   if (!response.ok) {
-    throw new Error(`Gemini API request failed: ${response.status}`);
+    let errorMessage = `Gemini API request failed: ${response.status}`;
+    
+    // Handle quota exceeded errors specifically
+    if (response.status === 429) {
+      try {
+        const errorText = await response.text();
+        const errorData = JSON.parse(errorText);
+        if (errorData.error?.message) {
+          errorMessage = `Gemini API quota exceeded: ${errorData.error.message}`;
+        } else {
+          errorMessage = `Gemini API quota exceeded. Please check your quota limits or wait before retrying.`;
+        }
+      } catch (e) {
+        errorMessage = `Gemini API quota exceeded. Please check your quota limits or wait before retrying.`;
+      }
+      throw new Error(errorMessage);
+    }
+    
+    throw new Error(errorMessage);
   }
 
   const data = await response.json();
@@ -220,9 +238,14 @@ export async function generateClarifyingQuestions(
         return { questions, source: 'gemini' };
       }
     } catch (error) {
-      console.error('Gemini API question generation failed, trying Groq:', error);
       if (error instanceof Error) {
-        console.error('Gemini error details:', error.message);
+        if (error.message.includes('quota exceeded') || error.message.includes('429')) {
+          console.warn('Gemini API quota exceeded for questions, falling back to Groq:', error.message);
+        } else {
+          console.error('Gemini API question generation failed, trying Groq:', error.message);
+        }
+      } else {
+        console.error('Gemini API question generation failed, trying Groq:', error);
       }
     }
   } else {

@@ -65,7 +65,23 @@ async function callGeminiAPI(prompt: string): Promise<string> {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Gemini API request failed: ${response.status} ${errorText}`);
+    let errorMessage = `Gemini API request failed: ${response.status}`;
+    
+    // Handle quota exceeded errors specifically
+    if (response.status === 429) {
+      try {
+        const errorData = JSON.parse(errorText);
+        if (errorData.error?.message) {
+          errorMessage = `Gemini API quota exceeded: ${errorData.error.message}`;
+        }
+      } catch (e) {
+        errorMessage = `Gemini API quota exceeded. Please check your quota limits or wait before retrying.`;
+      }
+    } else {
+      errorMessage = `${errorMessage} ${errorText}`;
+    }
+    
+    throw new Error(errorMessage);
   }
 
   const data = await response.json();
@@ -157,10 +173,15 @@ export async function amplifyPrompt(
         console.warn('Gemini API response too short or empty:', cleanedResponse?.length || 0);
       }
     } catch (error) {
-      console.error('Gemini API amplification failed, trying Groq:', error);
       // Log the full error for debugging
       if (error instanceof Error) {
-        console.error('Gemini error details:', error.message);
+        if (error.message.includes('quota exceeded') || error.message.includes('429')) {
+          console.warn('Gemini API quota exceeded, falling back to Groq:', error.message);
+        } else {
+          console.error('Gemini API amplification failed, trying Groq:', error.message);
+        }
+      } else {
+        console.error('Gemini API amplification failed, trying Groq:', error);
       }
     }
   } else {
