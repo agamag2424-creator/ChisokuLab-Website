@@ -2,6 +2,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { getAllBlogPosts } from "@/lib/mdx";
 import ResourcesHero from "@/components/sections/resources/ResourcesHero";
 import FeaturedGuide from "@/components/sections/resources/FeaturedGuide";
+import PromptAmplifier from "@/components/sections/resources/PromptAmplifier";
 import LatestVideos from "@/components/sections/resources/LatestVideos";
 import PopularArticles from "@/components/sections/resources/PopularArticles";
 import FreeTemplates from "@/components/sections/resources/FreeTemplates";
@@ -21,6 +22,7 @@ export default function ResourcesPage() {
     <div>
       <ResourcesHero />
       <FeaturedGuide />
+      <PromptAmplifier />
       <LatestVideos />
       <PopularArticles posts={popularPosts} />
       <FreeTemplates />
