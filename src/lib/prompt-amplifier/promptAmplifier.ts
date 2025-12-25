@@ -165,12 +165,16 @@ export async function amplifyPrompt(
   const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
 
   // Debug logging (remove in production if needed)
+  console.log('=== AMPLIFY PROMPT DEBUG START ===');
   console.log('API Keys check:', {
     hasGemini: !!GEMINI_API_KEY,
     hasGroq: !!GROQ_API_KEY,
     geminiLength: GEMINI_API_KEY?.length || 0,
-    groqLength: GROQ_API_KEY?.length || 0
+    groqLength: GROQ_API_KEY?.length || 0,
+    geminiPrefix: GEMINI_API_KEY?.substring(0, 5) || 'empty',
+    groqPrefix: GROQ_API_KEY?.substring(0, 5) || 'empty'
   });
+  console.log('=== AMPLIFY PROMPT DEBUG END ===');
 
   // Try Gemini API first (primary)
   if (GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here' && GEMINI_API_KEY.length > 10) {
@@ -245,7 +249,13 @@ export async function amplifyPrompt(
   }
 
   // Fallback to template (always available)
-  console.log('Using template-based amplification');
+  console.log('⚠️ FALLING BACK TO TEMPLATE - No APIs available or all failed');
+  console.log('Final state:', {
+    geminiAttempted: GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here' && GEMINI_API_KEY.length > 10,
+    groqAttempted: GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here' && GROQ_API_KEY.length > 10,
+    geminiKey: GEMINI_API_KEY ? `${GEMINI_API_KEY.substring(0, 5)}...` : 'missing',
+    groqKey: GROQ_API_KEY ? `${GROQ_API_KEY.substring(0, 5)}...` : 'missing'
+  });
   const framework = generateTemplateFramework(userInput, clarifyingAnswers);
   const markdown = frameworkToMarkdown(framework);
   

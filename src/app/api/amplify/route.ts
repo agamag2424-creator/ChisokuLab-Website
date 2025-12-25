@@ -14,12 +14,20 @@ export async function POST(request: NextRequest) {
     }
 
     // Debug: Log environment variable availability in API route
+    const geminiKey = process.env.GEMINI_API_KEY || '';
+    const groqKey = process.env.GROQ_API_KEY || '';
+    
+    console.log('=== API ROUTE DEBUG START ===');
     console.log('API Route - Environment check:', {
-      hasGemini: !!process.env.GEMINI_API_KEY,
-      hasGroq: !!process.env.GROQ_API_KEY,
-      geminiLength: process.env.GEMINI_API_KEY?.length || 0,
-      groqLength: process.env.GROQ_API_KEY?.length || 0
+      hasGemini: !!geminiKey,
+      hasGroq: !!groqKey,
+      geminiLength: geminiKey.length,
+      groqLength: groqKey.length,
+      geminiPrefix: geminiKey.substring(0, 5) || 'empty',
+      groqPrefix: groqKey.substring(0, 5) || 'empty',
+      allEnvKeys: Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('GROQ'))
     });
+    console.log('=== API ROUTE DEBUG END ===');
 
     const result = await amplifyPrompt(input, clarifyingAnswers);
 
