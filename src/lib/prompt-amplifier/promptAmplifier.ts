@@ -35,7 +35,7 @@ Generate a single, comprehensive, continuous prompt that expands on the user's i
 }
 
 async function callGeminiAPI(prompt: string): Promise<string> {
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
+  const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
   
   if (!GEMINI_API_KEY) {
     throw new Error('Gemini API key not configured');
@@ -96,7 +96,7 @@ async function callGeminiAPI(prompt: string): Promise<string> {
 }
 
 async function callGroqAPI(prompt: string): Promise<string> {
-  const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
+  const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
   
   if (!GROQ_API_KEY) {
     throw new Error('Groq API key not configured');
@@ -160,8 +160,9 @@ export async function amplifyPrompt(
   }
 
   // Read API keys at runtime (required for Vercel serverless functions)
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-  const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
+  // Trim whitespace in case keys were copied with extra spaces
+  const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
+  const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
 
   // Debug logging (remove in production if needed)
   console.log('API Keys check:', {
