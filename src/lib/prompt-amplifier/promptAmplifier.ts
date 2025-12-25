@@ -172,57 +172,75 @@ export async function amplifyPrompt(
   });
 
   // Try Gemini API first (primary)
-  if (GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here') {
+  if (GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here' && GEMINI_API_KEY.length > 10) {
     try {
-      console.log('Attempting Gemini API amplification...');
+      console.log('Attempting Gemini API amplification...', {
+        keyLength: GEMINI_API_KEY.length,
+        keyPrefix: GEMINI_API_KEY.substring(0, 5)
+      });
       const amplificationPrompt = getAmplificationPrompt(userInput, clarifyingAnswers);
       const apiResponse = await callGeminiAPI(amplificationPrompt);
       const cleanedResponse = cleanApiResponse(apiResponse);
       
       if (cleanedResponse && cleanedResponse.length > 100) {
-        console.log('Gemini API amplification successful, length:', cleanedResponse.length);
+        console.log('✅ Gemini API amplification successful, length:', cleanedResponse.length);
         return { output: cleanedResponse, source: 'gemini' };
       } else {
-        console.warn('Gemini API response too short or empty:', cleanedResponse?.length || 0);
+        console.warn('⚠️ Gemini API response too short or empty:', cleanedResponse?.length || 0);
       }
     } catch (error) {
       // Log the full error for debugging
       if (error instanceof Error) {
         if (error.message.includes('quota exceeded') || error.message.includes('429')) {
-          console.warn('Gemini API quota exceeded, falling back to Groq:', error.message);
+          console.warn('⚠️ Gemini API quota exceeded, falling back to Groq:', error.message);
         } else {
-          console.error('Gemini API amplification failed, trying Groq:', error.message);
+          console.error('❌ Gemini API amplification failed, trying Groq:', error.message);
+          console.error('Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
         }
       } else {
-        console.error('Gemini API amplification failed, trying Groq:', error);
+        console.error('❌ Gemini API amplification failed, trying Groq:', error);
       }
     }
   } else {
-    console.log('Gemini API key not configured or still placeholder, skipping Gemini');
+    console.warn('⚠️ Gemini API key not configured or invalid:', {
+      hasKey: !!GEMINI_API_KEY,
+      isPlaceholder: GEMINI_API_KEY === 'your_gemini_api_key_here',
+      keyLength: GEMINI_API_KEY?.length || 0,
+      skipping: true
+    });
   }
 
   // Try Groq API as fallback (secondary)
-  if (GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here') {
+  if (GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here' && GROQ_API_KEY.length > 10) {
     try {
-      console.log('Attempting Groq API amplification...');
+      console.log('Attempting Groq API amplification...', {
+        keyLength: GROQ_API_KEY.length,
+        keyPrefix: GROQ_API_KEY.substring(0, 5)
+      });
       const amplificationPrompt = getAmplificationPrompt(userInput, clarifyingAnswers);
       const apiResponse = await callGroqAPI(amplificationPrompt);
       const cleanedResponse = cleanApiResponse(apiResponse);
       
       if (cleanedResponse && cleanedResponse.length > 100) {
-        console.log('Groq API amplification successful, length:', cleanedResponse.length);
+        console.log('✅ Groq API amplification successful, length:', cleanedResponse.length);
         return { output: cleanedResponse, source: 'groq' };
       } else {
-        console.warn('Groq API response too short or empty:', cleanedResponse?.length || 0);
+        console.warn('⚠️ Groq API response too short or empty:', cleanedResponse?.length || 0);
       }
     } catch (error) {
-      console.error('Groq API amplification failed, falling back to template:', error);
+      console.error('❌ Groq API amplification failed, falling back to template:', error);
       if (error instanceof Error) {
         console.error('Groq error details:', error.message);
+        console.error('Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
       }
     }
   } else {
-    console.log('Groq API key not configured or still placeholder, skipping Groq');
+    console.warn('⚠️ Groq API key not configured or invalid:', {
+      hasKey: !!GROQ_API_KEY,
+      isPlaceholder: GROQ_API_KEY === 'your_groq_api_key_here',
+      keyLength: GROQ_API_KEY?.length || 0,
+      skipping: true
+    });
   }
 
   // Fallback to template (always available)
