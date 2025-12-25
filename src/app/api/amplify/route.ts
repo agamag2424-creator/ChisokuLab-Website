@@ -14,8 +14,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Debug: Log environment variable availability in API route
-    const geminiKey = process.env.GEMINI_API_KEY || '';
-    const groqKey = process.env.GROQ_API_KEY || '';
+    // Read at runtime (critical for Vercel serverless functions)
+    const geminiKey = (process.env.GEMINI_API_KEY || '').trim();
+    const groqKey = (process.env.GROQ_API_KEY || '').trim();
     
     console.log('=== API ROUTE DEBUG START ===');
     console.log('API Route - Environment check:', {
@@ -25,7 +26,12 @@ export async function POST(request: NextRequest) {
       groqLength: groqKey.length,
       geminiPrefix: geminiKey.substring(0, 5) || 'empty',
       groqPrefix: groqKey.substring(0, 5) || 'empty',
-      allEnvKeys: Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('GROQ'))
+      groqSuffix: groqKey.length > 3 ? groqKey.substring(groqKey.length - 3) : 'empty',
+      geminiValid: geminiKey.length > 10 && !geminiKey.includes('your_gemini'),
+      groqValid: groqKey.length > 10 && !groqKey.includes('your_groq') && !groqKey.includes('placeholder'),
+      allEnvKeys: Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('GROQ')),
+      nodeEnv: process.env.NODE_ENV,
+      vercelEnv: process.env.VERCEL_ENV
     });
     console.log('=== API ROUTE DEBUG END ===');
 

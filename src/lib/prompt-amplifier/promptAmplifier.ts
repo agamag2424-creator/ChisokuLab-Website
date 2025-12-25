@@ -96,46 +96,86 @@ async function callGeminiAPI(prompt: string): Promise<string> {
 }
 
 async function callGroqAPI(prompt: string): Promise<string> {
+  // Read API key at runtime (critical for Vercel serverless functions)
   const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
   
-  if (!GROQ_API_KEY) {
-    throw new Error('Groq API key not configured');
+  console.log('🔍 Groq API Key Check:', {
+    exists: !!GROQ_API_KEY,
+    length: GROQ_API_KEY.length,
+    prefix: GROQ_API_KEY.substring(0, 5) || 'empty',
+    isValid: GROQ_API_KEY.length > 10 && !GROQ_API_KEY.includes('your_groq')
+  });
+  
+  if (!GROQ_API_KEY || GROQ_API_KEY.length < 10) {
+    const errorMsg = `Groq API key not configured or invalid. Length: ${GROQ_API_KEY.length}`;
+    console.error('❌', errorMsg);
+    throw new Error(errorMsg);
   }
 
-  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${GROQ_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.7,
-      max_tokens: 2000,
-    }),
+  if (GROQ_API_KEY === 'your_groq_api_key_here' || GROQ_API_KEY.includes('placeholder')) {
+    const errorMsg = 'Groq API key appears to be a placeholder';
+    console.error('❌', errorMsg);
+    throw new Error(errorMsg);
+  }
+
+  console.log('🚀 Calling Groq API...', {
+    model: 'llama-3.3-70b-versatile',
+    promptLength: prompt.length
   });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Groq API request failed: ${response.status} ${errorText}`);
-  }
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GROQ_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      }),
+    });
 
-  const data = await response.json();
-  
-  if (data.choices && data.choices.length > 0) {
-    const choice = data.choices[0];
-    if (choice.message && choice.message.content) {
-      return choice.message.content;
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Groq API Error Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        errorText: errorText.substring(0, 200)
+      });
+      throw new Error(`Groq API request failed: ${response.status} ${errorText.substring(0, 200)}`);
     }
-  }
 
-  throw new Error('Unexpected Groq API response format');
+    const data = await response.json();
+    
+    if (data.choices && data.choices.length > 0) {
+      const choice = data.choices[0];
+      if (choice.message && choice.message.content) {
+        const content = choice.message.content;
+        console.log('✅ Groq API Success:', {
+          contentLength: content.length,
+          firstChars: content.substring(0, 50)
+        });
+        return content;
+      }
+    }
+
+    console.error('❌ Unexpected Groq API response format:', JSON.stringify(data).substring(0, 200));
+    throw new Error('Unexpected Groq API response format');
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('Groq API')) {
+      throw error; // Re-throw our formatted errors
+    }
+    console.error('❌ Groq API Network/Unknown Error:', error);
+    throw new Error(`Groq API call failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
 }
 
 function cleanApiResponse(text: string): string {
@@ -216,48 +256,123 @@ export async function amplifyPrompt(
   }
 
   // Try Groq API as fallback (secondary)
-  if (GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here' && GROQ_API_KEY.length > 10) {
+  const isGroqKeyValid = GROQ_API_KEY && 
+                         GROQ_API_KEY !== 'your_groq_api_key_here' && 
+                         !GROQ_API_KEY.includes('placeholder') &&
+                         GROQ_API_KEY.length > 10;
+  
+  // Detailed logging before Groq API call
+  console.log('=== GROQ API PRE-CALL DIAGNOSTICS ===');
+  console.log('GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY);
+  console.log('GROQ_API_KEY starts with:', process.env.GROQ_API_KEY?.substring(0, 4) || 'N/A');
+  console.log('GROQ_API_KEY (trimmed) exists:', !!GROQ_API_KEY);
+  console.log('GROQ_API_KEY (trimmed) length:', GROQ_API_KEY?.length || 0);
+  console.log('GROQ_API_KEY (trimmed) starts with:', GROQ_API_KEY?.substring(0, 4) || 'N/A');
+  console.log('isGroqKeyValid:', isGroqKeyValid);
+  console.log('Validation details:', {
+    hasKey: !!GROQ_API_KEY,
+    notPlaceholder: GROQ_API_KEY !== 'your_groq_api_key_here',
+    noPlaceholderText: !GROQ_API_KEY?.includes('placeholder'),
+    lengthValid: GROQ_API_KEY?.length > 10,
+    allChecksPass: isGroqKeyValid
+  });
+  console.log('=== END GROQ PRE-CALL DIAGNOSTICS ===');
+  
+  if (isGroqKeyValid) {
     try {
-      console.log('Attempting Groq API amplification...', {
+      console.log('🔄 Attempting Groq API amplification...', {
         keyLength: GROQ_API_KEY.length,
-        keyPrefix: GROQ_API_KEY.substring(0, 5)
+        keyPrefix: GROQ_API_KEY.substring(0, 5),
+        keySuffix: GROQ_API_KEY.substring(GROQ_API_KEY.length - 3)
       });
       const amplificationPrompt = getAmplificationPrompt(userInput, clarifyingAnswers);
-      const apiResponse = await callGroqAPI(amplificationPrompt);
+      
+      // Wrap the actual API call with detailed error logging
+      let apiResponse: string;
+      try {
+        console.log('📞 About to call callGroqAPI()...');
+        apiResponse = await callGroqAPI(amplificationPrompt);
+        console.log('✅ callGroqAPI() returned successfully, length:', apiResponse?.length || 0);
+      } catch (error) {
+        console.error('❌ Groq API Error in callGroqAPI():', error);
+        console.error('Error type:', error instanceof Error ? error.constructor.name : typeof error);
+        console.error('Error message:', error instanceof Error ? error.message : String(error));
+        console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+        throw error; // Don't silently fall back - re-throw to be caught by outer catch
+      }
+      
       const cleanedResponse = cleanApiResponse(apiResponse);
       
       if (cleanedResponse && cleanedResponse.length > 100) {
-        console.log('✅ Groq API amplification successful, length:', cleanedResponse.length);
+        console.log('✅ Groq API amplification successful!', {
+          length: cleanedResponse.length,
+          source: 'groq'
+        });
         return { output: cleanedResponse, source: 'groq' };
       } else {
-        console.warn('⚠️ Groq API response too short or empty:', cleanedResponse?.length || 0);
+        console.warn('⚠️ Groq API response too short or empty:', {
+          length: cleanedResponse?.length || 0,
+          response: cleanedResponse?.substring(0, 100) || 'empty'
+        });
+        throw new Error('Groq API response too short');
       }
     } catch (error) {
-      console.error('❌ Groq API amplification failed, falling back to template:', error);
+      console.error('❌ Groq API amplification failed, falling back to template:', {
+        error: error instanceof Error ? error.message : String(error),
+        errorType: error instanceof Error ? error.constructor.name : typeof error
+      });
       if (error instanceof Error) {
-        console.error('Groq error details:', error.message);
-        console.error('Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+        console.error('Groq error stack:', error.stack?.substring(0, 300));
+        console.error('Groq error name:', error.name);
+        console.error('Groq error cause:', error.cause);
       }
+      // Don't re-throw here - we want to fall back to template
     }
   } else {
-    console.warn('⚠️ Groq API key not configured or invalid:', {
+    console.warn('⚠️ Groq API key not configured or invalid - SKIPPING GROQ API CALL:', {
       hasKey: !!GROQ_API_KEY,
       isPlaceholder: GROQ_API_KEY === 'your_groq_api_key_here',
+      containsPlaceholder: GROQ_API_KEY?.includes('placeholder') || false,
       keyLength: GROQ_API_KEY?.length || 0,
-      skipping: true
+      isValid: isGroqKeyValid,
+      skipping: true,
+      reason: !GROQ_API_KEY ? 'Key is missing/empty' :
+              GROQ_API_KEY === 'your_groq_api_key_here' ? 'Key is placeholder' :
+              GROQ_API_KEY.includes('placeholder') ? 'Key contains placeholder text' :
+              GROQ_API_KEY.length <= 10 ? 'Key too short' :
+              'Unknown validation failure'
     });
   }
 
   // Fallback to template (always available)
-  console.log('⚠️ FALLING BACK TO TEMPLATE - No APIs available or all failed');
+  console.log('⚠️ ============================================');
+  console.log('⚠️ FALLING BACK TO TEMPLATE');
+  console.log('⚠️ ============================================');
+  console.log('Template fallback triggered because:');
+  console.log('  - Gemini attempted:', GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here' && GEMINI_API_KEY.length > 10);
+  console.log('  - Groq attempted:', GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here' && GROQ_API_KEY.length > 10);
+  console.log('  - Gemini key exists:', !!GEMINI_API_KEY);
+  console.log('  - Groq key exists:', !!GROQ_API_KEY);
+  console.log('  - Gemini key length:', GEMINI_API_KEY?.length || 0);
+  console.log('  - Groq key length:', GROQ_API_KEY?.length || 0);
+  console.log('  - Gemini key prefix:', GEMINI_API_KEY ? `${GEMINI_API_KEY.substring(0, 5)}...` : 'missing');
+  console.log('  - Groq key prefix:', GROQ_API_KEY ? `${GROQ_API_KEY.substring(0, 5)}...` : 'missing');
   console.log('Final state:', {
     geminiAttempted: GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here' && GEMINI_API_KEY.length > 10,
     groqAttempted: GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here' && GROQ_API_KEY.length > 10,
     geminiKey: GEMINI_API_KEY ? `${GEMINI_API_KEY.substring(0, 5)}...` : 'missing',
-    groqKey: GROQ_API_KEY ? `${GROQ_API_KEY.substring(0, 5)}...` : 'missing'
+    groqKey: GROQ_API_KEY ? `${GROQ_API_KEY.substring(0, 5)}...` : 'missing',
+    reason: !GEMINI_API_KEY && !GROQ_API_KEY ? 'Both keys missing' :
+            !GEMINI_API_KEY && GROQ_API_KEY ? 'Gemini missing, Groq failed' :
+            GEMINI_API_KEY && !GROQ_API_KEY ? 'Gemini failed, Groq missing' :
+            'Both APIs failed or returned invalid responses'
   });
+  console.log('⚠️ ============================================');
+  
   const framework = generateTemplateFramework(userInput, clarifyingAnswers);
   const markdown = frameworkToMarkdown(framework);
+  
+  console.log('✅ Template fallback generated, length:', markdown.length);
   
   return { output: markdown, source: 'template' };
 }
