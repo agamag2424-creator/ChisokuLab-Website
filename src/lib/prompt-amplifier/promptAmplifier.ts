@@ -201,18 +201,37 @@ export async function amplifyPrompt(
 
   // Read API keys at runtime (required for Vercel serverless functions)
   // Trim whitespace in case keys were copied with extra spaces
+  // EXACT VARIABLE NAME: process.env.GROQ_API_KEY (case-sensitive, all caps)
   const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
   const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
 
   // Debug logging (remove in production if needed)
   console.log('=== AMPLIFY PROMPT DEBUG START ===');
+  console.log('🔍 Environment Variable Access:');
+  console.log('  - Accessing: process.env.GROQ_API_KEY (exact name, case-sensitive)');
+  console.log('  - Accessing: process.env.GEMINI_API_KEY (exact name, case-sensitive)');
+  console.log('  - Raw process.env.GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY);
+  console.log('  - Raw process.env.GROQ_API_KEY type:', typeof process.env.GROQ_API_KEY);
+  console.log('  - Raw process.env.GROQ_API_KEY value:', process.env.GROQ_API_KEY ? `${process.env.GROQ_API_KEY.substring(0, 5)}...` : 'undefined/null');
+  
+  // List ALL environment variables that might be related (case-insensitive search)
+  const allEnvKeys = Object.keys(process.env);
+  const groqRelatedKeys = allEnvKeys.filter(k => k.toUpperCase().includes('GROQ'));
+  const geminiRelatedKeys = allEnvKeys.filter(k => k.toUpperCase().includes('GEMINI'));
+  
+  console.log('🔍 All environment variables containing "GROQ":', groqRelatedKeys);
+  console.log('🔍 All environment variables containing "GEMINI":', geminiRelatedKeys);
+  console.log('🔍 Total environment variables:', allEnvKeys.length);
+  
   console.log('API Keys check:', {
     hasGemini: !!GEMINI_API_KEY,
     hasGroq: !!GROQ_API_KEY,
     geminiLength: GEMINI_API_KEY?.length || 0,
     groqLength: GROQ_API_KEY?.length || 0,
     geminiPrefix: GEMINI_API_KEY?.substring(0, 5) || 'empty',
-    groqPrefix: GROQ_API_KEY?.substring(0, 5) || 'empty'
+    groqPrefix: GROQ_API_KEY?.substring(0, 5) || 'empty',
+    groqRelatedEnvVars: groqRelatedKeys,
+    geminiRelatedEnvVars: geminiRelatedKeys
   });
   console.log('=== AMPLIFY PROMPT DEBUG END ===');
 

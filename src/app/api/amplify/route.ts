@@ -15,10 +15,25 @@ export async function POST(request: NextRequest) {
 
     // Debug: Log environment variable availability in API route
     // Read at runtime (critical for Vercel serverless functions)
+    // EXACT VARIABLE NAME: process.env.GROQ_API_KEY (case-sensitive, all caps)
     const geminiKey = (process.env.GEMINI_API_KEY || '').trim();
     const groqKey = (process.env.GROQ_API_KEY || '').trim();
     
     console.log('=== API ROUTE DEBUG START ===');
+    console.log('🔍 Environment Variable Access in API Route:');
+    console.log('  - Accessing: process.env.GROQ_API_KEY (exact name, case-sensitive)');
+    console.log('  - Accessing: process.env.GEMINI_API_KEY (exact name, case-sensitive)');
+    console.log('  - Raw process.env.GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY);
+    console.log('  - Raw process.env.GROQ_API_KEY type:', typeof process.env.GROQ_API_KEY);
+    
+    // List ALL environment variables that might be related (case-insensitive search)
+    const allEnvKeys = Object.keys(process.env);
+    const groqRelatedKeys = allEnvKeys.filter(k => k.toUpperCase().includes('GROQ'));
+    const geminiRelatedKeys = allEnvKeys.filter(k => k.toUpperCase().includes('GEMINI'));
+    
+    console.log('🔍 All environment variables containing "GROQ":', groqRelatedKeys);
+    console.log('🔍 All environment variables containing "GEMINI":', geminiRelatedKeys);
+    
     console.log('API Route - Environment check:', {
       hasGemini: !!geminiKey,
       hasGroq: !!groqKey,
@@ -30,6 +45,8 @@ export async function POST(request: NextRequest) {
       geminiValid: geminiKey.length > 10 && !geminiKey.includes('your_gemini'),
       groqValid: groqKey.length > 10 && !groqKey.includes('your_groq') && !groqKey.includes('placeholder'),
       allEnvKeys: Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('GROQ')),
+      groqRelatedEnvVars: groqRelatedKeys,
+      geminiRelatedEnvVars: geminiRelatedKeys,
       nodeEnv: process.env.NODE_ENV,
       vercelEnv: process.env.VERCEL_ENV
     });
