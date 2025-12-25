@@ -13,7 +13,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Debug: Log environment variable availability in API route
+    console.log('API Route - Environment check:', {
+      hasGemini: !!process.env.GEMINI_API_KEY,
+      hasGroq: !!process.env.GROQ_API_KEY,
+      geminiLength: process.env.GEMINI_API_KEY?.length || 0,
+      groqLength: process.env.GROQ_API_KEY?.length || 0
+    });
+
     const result = await amplifyPrompt(input, clarifyingAnswers);
+
+    console.log('API Route - Amplification result:', {
+      source: result.source,
+      outputLength: result.output.length
+    });
 
     return NextResponse.json({
       output: result.output,
