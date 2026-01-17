@@ -22,13 +22,13 @@ const formats = [
     icon: Users,
     title: "Community",
     description:
-      "Access to a private community of managers navigating the same challenges.",
+      "Access to a private community of managers (launching with course).",
   },
   {
     icon: MessageCircle,
     title: "Live Q&A",
     description:
-      "Monthly live sessions to answer your questions and provide guidance.",
+      "Monthly live sessions starting at launch to answer your questions.",
   },
 ];
 

@@ -13,7 +13,7 @@ const faqs = [
       {
         question: "What's included in the course?",
         answer:
-          "The course includes 12 comprehensive modules covering AI efficiency and Hindu decision science, 30+ hours of video content, all templates and frameworks, 6 months of community access, lifetime course access, monthly live Q&A sessions, and a certificate of completion.",
+          "The course includes 7 comprehensive modules covering AI efficiency and Hindu decision science, ~4 hours of video content, all templates and frameworks, private community access (launching with course), lifetime course access, monthly live Q&A sessions (starting at launch), and a certificate of completion.",
       },
       {
         question: "How long does it take to complete the course?",
@@ -43,7 +43,7 @@ const faqs = [
       {
         question: "When do consulting services launch?",
         answer:
-          "Our Enterprise AI Deployment Advisory services are launching in Q1 2026. Join the waitlist to get early access and a free consultation when we launch.",
+          "Our Enterprise AI Deployment Advisory services are launching in Q4 2026. Join the waitlist to get early access and a free consultation when we launch.",
       },
       {
         question: "What types of organizations do you work with?",

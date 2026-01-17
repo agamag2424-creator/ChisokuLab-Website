@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       "AI efficiency training combined with Hindu decision science philosophy. Learn to make confident decisions in the age of AI.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://chisokulab.com/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "ChisokuLab - Calm Amid AI Chaos",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "ChisokuLab - Calm Amid AI Chaos",
     description:
       "AI efficiency training combined with Hindu decision science philosophy.",
-    images: ["/og-image.jpg"],
+    images: ["https://chisokulab.com/og-image.jpg"],
   },
   robots: {
     index: true,

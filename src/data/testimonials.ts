@@ -12,7 +12,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "1",
     quote:
-      "This course transformed how I approach AI tools. I went from being overwhelmed by options to confidently choosing the right tools for my team. The combination of practical AI training with decision science principles is exactly what managers need.",
+      "The decision frameworks completely changed how I approach AI adoption. I went from being overwhelmed by options to confidently choosing the right tools for my team. The combination of practical AI guidance with decision science principles is exactly what managers need.",
     author: "Priya Sharma",
     role: "Operations Manager",
     company: "TechCorp India",
@@ -21,7 +21,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "2",
     quote:
-      "The Hindu decision science frameworks are game-changers. I've applied the three gunas framework to every major decision since taking this course. It's helped me stay calm and make better choices even when everything feels chaotic.",
+      "The Hindu decision science frameworks are game-changers. Applying the three gunas framework to major decisions has helped me stay calm and make better choices even when everything feels chaotic. These ancient principles are surprisingly relevant to modern AI challenges.",
     author: "Rajesh Kumar",
     role: "Product Director",
     company: "InnovateLabs",
@@ -30,7 +30,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "3",
     quote:
-      "As someone who was skeptical about mixing philosophy with business training, I was pleasantly surprised. The course is incredibly practical. The AI efficiency modules alone are worth the investment, but the decision science component is what makes it unique.",
+      "As someone who was skeptical about mixing philosophy with business strategy, I was pleasantly surprised. The AI efficiency frameworks alone are valuable, but the decision science component is what makes this approach unique. It addresses the 'why' behind AI adoption, not just the 'how'.",
     author: "Anita Desai",
     role: "VP of Strategy",
     company: "Global Solutions Inc.",
@@ -39,7 +39,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "4",
     quote:
-      "I've taken several AI courses, but none have addressed the decision-making aspect like this one. Learning to use AI tools is one thing, but learning when and why to use them is another. This course covers both beautifully.",
+      "Most AI training focuses on tools and techniques. This approach addresses the decision-making aspect that's often overlooked. Learning to use AI tools is one thing, but learning when and why to use them is what separates effective leaders from overwhelmed managers.",
     author: "Vikram Patel",
     role: "Engineering Manager",
     company: "CloudTech Solutions",
@@ -48,7 +48,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "5",
     quote:
-      "The community support and lifetime access make this course exceptional. I've been able to revisit modules as new AI tools emerge, and the frameworks help me evaluate them systematically. Highly recommend for any leader navigating AI adoption.",
+      "These frameworks provide a systematic way to evaluate new AI tools as they emerge. Instead of chasing every new technology, I now have a clear methodology for deciding what fits our organization. Highly recommend for any leader navigating AI adoption.",
     author: "Meera Reddy",
     role: "Chief Innovation Officer",
     company: "FutureForward",

@@ -2,7 +2,7 @@ import Hero from "@/components/sections/Hero";
 import ProblemSection from "@/components/sections/ProblemSection";
 import SolutionSection from "@/components/sections/SolutionSection";
 import CoursePreview from "@/components/sections/CoursePreview";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import DecisionCrisisSection from "@/components/sections/DecisionCrisisSection";
 import AboutPreview from "@/components/sections/AboutPreview";
 import FinalCTA from "@/components/sections/FinalCTA";
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -21,7 +21,7 @@ export default function Home() {
       <ProblemSection />
       <SolutionSection />
       <CoursePreview />
-      <TestimonialsSection />
+      <DecisionCrisisSection />
       <AboutPreview />
       <FinalCTA />
     </>

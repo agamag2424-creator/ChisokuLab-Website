@@ -51,7 +51,7 @@ export default function Hero() {
             >
               <Link href="/course">
                 <Button variant="primary" size="lg">
-                  Start Learning
+                  Explore Course
                 </Button>
               </Link>
               <Link href="/consulting">

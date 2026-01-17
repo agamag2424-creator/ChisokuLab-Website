@@ -27,7 +27,7 @@ export default function ConsultingHero() {
               on tools that don't fit your needs.
             </p>
             <div className="inline-block px-4 py-2 rounded-full bg-amber-100 border border-amber-300 text-amber-800 text-sm font-medium">
-              Launching Q1 2026
+              Launching Q4 2026
             </div>
           </motion.div>
         </motion.div>

@@ -100,8 +100,7 @@ export default function TestimonialsSection() {
             variants={zenVariants.staggerChild}
             className="text-xl text-gray-200 max-w-2xl mx-auto"
           >
-            Join hundreds of managers who've transformed their approach to AI and
-            decision-making
+            Built for managers navigating AI adoption and decision-making challenges
           </motion.p>
         </motion.div>
 

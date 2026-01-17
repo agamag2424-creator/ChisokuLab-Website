@@ -89,8 +89,8 @@ export default function FinalCTA() {
               Ready to Stop Reacting and Start Leading?
             </h2>
             <p className="mt-4 text-lg text-white/90 max-w-2xl mx-auto">
-              Join hundreds of managers who've transformed their approach to AI
-              and decision-making. Get started today.
+              Join managers who are transforming their approach to AI
+              and decision-making. Get notified when we launch.
             </p>
           </motion.div>
 
@@ -115,7 +115,7 @@ export default function FinalCTA() {
                 isLoading={isLoading}
                 disabled={isLoading || isSubmitted}
               >
-                {isSubmitted ? "Subscribed!" : "Get Started Free"}
+                {isSubmitted ? "Subscribed!" : "Get Notified"}
               </Button>
             </form>
           </motion.div>

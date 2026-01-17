@@ -58,10 +58,10 @@ export default function AboutPreview() {
                 developing the inner clarity to use them wisely.
               </p>
               <p>
-                The frameworks you'll learn here have helped me and hundreds of
-                others move from indecision to confident leadership. They're
-                practical, tested, and grounded in wisdom that's stood the test
-                of millennia.
+                The frameworks you'll learn here have guided leaders for 3,000
+                years—helping them move from indecision to confident leadership.
+                They're practical, tested, and grounded in wisdom that's stood
+                the test of millennia.
               </p>
             </motion.div>
 

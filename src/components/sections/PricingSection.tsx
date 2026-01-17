@@ -11,8 +11,8 @@ const features = [
   "~4 hours of video content (binge-able or self-paced)",
   "All templates, worksheets, and frameworks",
   "Lifetime course access and updates",
-  "Monthly live Q&A sessions",
-  "Private community access",
+  "Monthly live Q&A sessions (starting at launch)",
+  "Private community access (launching with course)",
   "Certificate of completion",
   "30-day money-back guarantee",
 ];
@@ -36,7 +36,7 @@ export default function PricingSection() {
               {/* Badge */}
               <div className="mb-6">
                 <span className="inline-block px-4 py-2 rounded-full bg-amber-100 border border-amber-300 text-amber-800 text-sm font-medium">
-                  Early Bird Pricing
+                  Pre-Launch Pricing
                 </span>
               </div>
 
@@ -79,11 +79,11 @@ export default function PricingSection() {
                   size="lg"
                   className="w-full"
                   onClick={() => {
-                    // TODO: Replace with actual Gumroad link
+                    // TODO: Replace with actual waitlist/Gumroad link
                     window.open("https://gumroad.com/placeholder", "_blank");
                   }}
                 >
-                  Enroll Now
+                  Join Waitlist
                 </Button>
               </div>
 

@@ -1,12 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Clock, Users, Infinity, Star, RefreshCw } from "lucide-react";
+import { motion } from "framer-motion";
+import { BookOpen, Clock, Infinity, RefreshCw } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { zenVariants } from "@/lib/animations";
-import { getAverageRating } from "@/data/testimonials";
-import { enrollmentCount, getRandomRecentEnrollment, type RecentEnrollment } from "@/data/social-proof";
 
 const stats = [
   { icon: BookOpen, label: "Modules", value: "7" },
@@ -16,19 +13,6 @@ const stats = [
 ];
 
 export default function CourseHero() {
-  const [recentEnrollment, setRecentEnrollment] = useState<RecentEnrollment>(
-    getRandomRecentEnrollment()
-  );
-  const averageRating = getAverageRating();
-
-  // Rotate recent enrollment every 8 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRecentEnrollment(getRandomRecentEnrollment());
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
   const scrollToPricing = () => {
     const pricingSection = document.getElementById("pricing");
     if (pricingSection) {
@@ -45,10 +29,13 @@ export default function CourseHero() {
           variants={zenVariants.staggerContainer}
           className="space-y-8 text-center"
         >
-          {/* Badge */}
-          <motion.div variants={zenVariants.staggerChild}>
+          {/* Badges */}
+          <motion.div variants={zenVariants.staggerChild} className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <span className="inline-block px-4 py-2 rounded-full bg-chisoku-cyan-500/20 border border-chisoku-cyan-500/30 text-chisoku-cyan-500 text-sm font-medium">
               7-Module Decision Framework Course
+            </span>
+            <span className="inline-block px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-sm font-medium">
+              Launching March 2026
             </span>
           </motion.div>
 
@@ -65,52 +52,10 @@ export default function CourseHero() {
             variants={zenVariants.staggerChild}
             className="text-lg text-gray-300 sm:text-xl lg:text-2xl max-w-3xl mx-auto"
           >
-            Evidence-based decision frameworks for modern managers. make confident
+            Evidence-based decision frameworks for modern managers. Make confident
             choices in the age of artificial intelligence. Stop reacting. Start
             leading.
           </motion.p>
-
-          {/* Social Proof Indicators */}
-          <motion.div
-            variants={zenVariants.staggerChild}
-            className="flex flex-col items-center gap-4 pt-6"
-          >
-            {/* Enrollment Count & Rating */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-white">
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-chisoku-cyan-500" />
-                <span className="text-lg font-semibold">
-                  {enrollmentCount} managers enrolled
-                </span>
-              </div>
-              <div className="hidden sm:block w-px h-6 bg-gray-600" />
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                <span className="text-lg font-semibold">
-                  {averageRating.toFixed(1)} avg. rating
-                </span>
-              </div>
-            </div>
-
-            {/* Recent Enrollment Ticker */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={recentEnrollment.name}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5 }}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20"
-              >
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-sm text-gray-200">
-                  <span className="font-semibold">{recentEnrollment.name}</span> from{" "}
-                  <span className="font-semibold">{recentEnrollment.location}</span> enrolled{" "}
-                  {recentEnrollment.timeAgo}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
 
           {/* Stats Grid */}
           <motion.div
@@ -144,7 +89,7 @@ export default function CourseHero() {
             className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center pt-8"
           >
             <Button variant="primary" size="lg" onClick={scrollToPricing}>
-              Enroll Now
+              Join Waitlist
             </Button>
             <Button variant="secondary" size="lg">
               Download Syllabus
@@ -155,4 +100,3 @@ export default function CourseHero() {
     </section>
   );
 }
-
