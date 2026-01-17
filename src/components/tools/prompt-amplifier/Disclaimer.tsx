@@ -6,10 +6,10 @@ export default function Disclaimer() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+    <div className="mt-6 p-4 bg-gray-50 border border-gray-100 rounded-xl">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 text-sm text-gray-600 hover:text-chisoku-navy transition-colors w-full"
+        className="flex items-center gap-2 text-sm text-gray-500 hover:text-chisoku-navy transition-colors w-full"
       >
         <svg 
           className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
@@ -23,7 +23,7 @@ export default function Disclaimer() {
       </button>
       
       {isExpanded && (
-        <div className="mt-3 text-sm text-gray-600 space-y-2">
+        <div className="mt-3 text-sm text-gray-500 space-y-2">
           <p>
             <strong className="text-chisoku-navy">AI-Generated Content:</strong> The amplified prompts 
             are generated using AI (Gemini or Groq when available) or rule-based templates. Results may vary and 
@@ -42,4 +42,3 @@ export default function Disclaimer() {
     </div>
   );
 }
-

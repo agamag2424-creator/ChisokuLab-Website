@@ -1,7 +1,5 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-
 interface PromptInputProps {
   value: string;
   onChange: (value: string) => void;
@@ -10,7 +8,7 @@ interface PromptInputProps {
 }
 
 /**
- * PromptInput Component
+ * PromptInput Component - ChisokuLab Branded
  * Handles user input for prompt amplification with keyboard shortcuts
  */
 export default function PromptInput({ value, onChange, onAmplify, isLoading }: PromptInputProps) {
@@ -37,38 +35,49 @@ export default function PromptInput({ value, onChange, onAmplify, isLoading }: P
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter your prompt idea... (e.g., 'Build me a business idea')"
+          placeholder="Enter your prompt idea... (e.g., 'Help me write a business proposal')"
           maxLength={maxLength}
           disabled={isLoading}
           aria-describedby="char-count keyboard-hint"
           aria-busy={isLoading}
-          className="w-full h-full min-h-[200px] p-4 bg-white border border-gray-300 rounded-lg 
+          className="w-full h-full min-h-[200px] p-4 bg-white border border-gray-200 rounded-xl 
                      text-chisoku-navy placeholder-gray-400 resize-none
                      focus:outline-none focus:ring-2 focus:ring-chisoku-cyan-500 focus:border-transparent
-                     disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                     disabled:opacity-50 disabled:cursor-not-allowed
+                     shadow-sm"
         />
         <div 
           id="char-count"
-          className="absolute bottom-2 right-2 text-xs text-gray-500"
+          className="absolute bottom-2 right-2 text-xs text-gray-400"
           aria-live="polite"
         >
           {value.length}/{maxLength}
         </div>
       </div>
-      <div className="mt-4">
-        <Button
-          onClick={onAmplify}
-          disabled={isLoading || !value.trim()}
-          isLoading={isLoading}
-          className="w-full"
-        >
-          {isLoading ? 'Amplifying...' : 'Amplify Prompt'}
-        </Button>
-      </div>
+      <button
+        onClick={onAmplify}
+        disabled={isLoading || !value.trim()}
+        aria-busy={isLoading}
+        className="mt-4 w-full py-3 px-4 bg-chisoku-cyan-500 hover:bg-chisoku-cyan-600 disabled:bg-gray-300
+                   text-white font-medium rounded-xl transition-colors
+                   disabled:cursor-not-allowed flex items-center justify-center gap-2
+                   shadow-md hover:shadow-lg"
+      >
+        {isLoading ? (
+          <>
+            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            <span>Amplifying...</span>
+          </>
+        ) : (
+          'Amplify Prompt'
+        )}
+      </button>
       <p id="keyboard-hint" className="mt-2 text-xs text-gray-500 text-center">
-        Press ⌘+Enter or Ctrl+Enter to amplify
+        Press Cmd+Enter or Ctrl+Enter to amplify
       </p>
     </div>
   );
 }
-

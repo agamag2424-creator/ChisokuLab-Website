@@ -117,4 +117,3 @@ export function getVaguenessReason(input: string): string | null {
 export function getVaguenessSuggestions(input: string): string[] {
   return analyzeVagueness(input).suggestions;
 }
-

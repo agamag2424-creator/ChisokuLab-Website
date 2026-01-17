@@ -1,7 +1,10 @@
 /**
  * Clarifying Questions Module
- * Generates clarifying questions for vague inputs using Gemini/Groq APIs
+ * Generates clarifying questions for vague inputs
+ * Uses Gemini API (primary) with template fallback
  */
+
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
 export interface ClarifyingQuestion {
   id: string;
@@ -11,11 +14,11 @@ export interface ClarifyingQuestion {
 
 export interface ClarifyingQuestionsResult {
   questions: ClarifyingQuestion[];
-  source: 'gemini' | 'groq' | 'template';
+  source: 'gemini' | 'template';
 }
 
 function getQuestionsPrompt(userInput: string): string {
-  const instruction = `You are a helpful assistant that generates clarifying questions. Given a vague user request, generate 3-4 specific questions that would help understand what the user really wants.
+  return `You are a helpful assistant that generates clarifying questions. Given a vague user request, generate 3-4 specific questions that would help understand what the user really wants.
 
 User Request: "${userInput}"
 
@@ -26,111 +29,42 @@ Generate questions in JSON format like this:
 ]
 
 Return ONLY valid JSON array, no other text. Generate 3-4 relevant clarifying questions.`;
-
-  return instruction;
 }
 
 async function callGeminiAPIForQuestions(prompt: string): Promise<string> {
-  const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
-  
   if (!GEMINI_API_KEY) {
     throw new Error('Gemini API key not configured');
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      contents: [{
-        parts: [{
-          text: prompt
-        }]
-      }],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 500,
-      }
-    }),
-  });
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 500,
+        },
+      }),
+    }
+  );
 
   if (!response.ok) {
-    let errorMessage = `Gemini API request failed: ${response.status}`;
-    
-    // Handle quota exceeded errors specifically
-    if (response.status === 429) {
-      try {
-        const errorText = await response.text();
-        const errorData = JSON.parse(errorText);
-        if (errorData.error?.message) {
-          errorMessage = `Gemini API quota exceeded: ${errorData.error.message}`;
-        } else {
-          errorMessage = `Gemini API quota exceeded. Please check your quota limits or wait before retrying.`;
-        }
-      } catch (e) {
-        errorMessage = `Gemini API quota exceeded. Please check your quota limits or wait before retrying.`;
-      }
-      throw new Error(errorMessage);
-    }
-    
-    throw new Error(errorMessage);
+    const errorText = await response.text();
+    throw new Error(`Gemini API request failed: ${response.status} ${errorText}`);
   }
 
   const data = await response.json();
   
-  if (data.candidates && data.candidates.length > 0) {
-    const candidate = data.candidates[0];
-    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
-      return candidate.content.parts[0].text || '';
-    }
+  if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+    return data.candidates[0].content.parts[0].text;
   }
   
   throw new Error('Unexpected Gemini API response format');
-}
-
-async function callGroqAPIForQuestions(prompt: string): Promise<string> {
-  const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
-  
-  if (!GROQ_API_KEY) {
-    throw new Error('Groq API key not configured');
-  }
-
-  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${GROQ_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.7,
-      max_tokens: 500,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Groq API request failed: ${response.status}`);
-  }
-
-  const data = await response.json();
-  
-  if (data.choices && data.choices.length > 0) {
-    const choice = data.choices[0];
-    if (choice.message && choice.message.content) {
-      return choice.message.content;
-    }
-  }
-  
-  throw new Error('Unexpected Groq API response format');
 }
 
 function parseQuestionsJSON(text: string): ClarifyingQuestion[] {
@@ -217,7 +151,7 @@ function generateTemplateQuestions(userInput: string): ClarifyingQuestion[] {
 
 /**
  * Main function to generate clarifying questions
- * Tries Gemini API first, then Groq API, falls back to template-based generation
+ * Tries Gemini API first, falls back to template-based generation
  */
 export async function generateClarifyingQuestions(
   userInput: string
@@ -226,21 +160,8 @@ export async function generateClarifyingQuestions(
     return { questions: [], source: 'template' };
   }
 
-  // Read API keys at runtime (required for Vercel serverless functions)
-  // Trim whitespace in case keys were copied with extra spaces
-  const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
-  const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
-
-  // Debug logging (remove in production if needed)
-  console.log('API Keys check (questions):', {
-    hasGemini: !!GEMINI_API_KEY,
-    hasGroq: !!GROQ_API_KEY,
-    geminiLength: GEMINI_API_KEY?.length || 0,
-    groqLength: GROQ_API_KEY?.length || 0
-  });
-
   // Try Gemini API first
-  if (GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here') {
+  if (GEMINI_API_KEY) {
     try {
       console.log('Generating clarifying questions via Gemini API...');
       const prompt = getQuestionsPrompt(userInput);
@@ -252,40 +173,8 @@ export async function generateClarifyingQuestions(
         return { questions, source: 'gemini' };
       }
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.includes('quota exceeded') || error.message.includes('429')) {
-          console.warn('Gemini API quota exceeded for questions, falling back to Groq:', error.message);
-        } else {
-          console.error('Gemini API question generation failed, trying Groq:', error.message);
-        }
-      } else {
-        console.error('Gemini API question generation failed, trying Groq:', error);
-      }
+      console.error('Gemini API question generation failed:', error);
     }
-  } else {
-    console.log('Gemini API key not configured or still placeholder, skipping Gemini');
-  }
-
-  // Try Groq API as fallback
-  if (GROQ_API_KEY && GROQ_API_KEY !== 'your_groq_api_key_here') {
-    try {
-      console.log('Generating clarifying questions via Groq API...');
-      const prompt = getQuestionsPrompt(userInput);
-      const response = await callGroqAPIForQuestions(prompt);
-      const questions = parseQuestionsJSON(response);
-      
-      if (questions.length >= 2) {
-        console.log('Groq API questions generated:', questions.length);
-        return { questions, source: 'groq' };
-      }
-    } catch (error) {
-      console.error('Groq API question generation failed:', error);
-      if (error instanceof Error) {
-        console.error('Groq error details:', error.message);
-      }
-    }
-  } else {
-    console.log('Groq API key not configured or still placeholder, skipping Groq');
   }
 
   // Fallback to template
@@ -293,4 +182,3 @@ export async function generateClarifyingQuestions(
   const questions = generateTemplateQuestions(userInput);
   return { questions, source: 'template' };
 }
-

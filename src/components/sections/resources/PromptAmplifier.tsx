@@ -7,19 +7,18 @@ import AmplifiedOutput from '@/components/tools/prompt-amplifier/AmplifiedOutput
 import CopyButton from '@/components/tools/prompt-amplifier/CopyButton';
 import ClarifyingQuestions from '@/components/tools/prompt-amplifier/ClarifyingQuestions';
 import Disclaimer from '@/components/tools/prompt-amplifier/Disclaimer';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import { zenVariants } from '@/lib/animations';
 import { ClarifyingQuestion } from '@/lib/prompt-amplifier/clarifyingQuestions';
+import { AmplificationSource } from '@/lib/prompt-amplifier/promptAmplifier';
+import { zenVariants } from '@/lib/animations';
 
 type AppState = 'input' | 'clarifying' | 'amplifying' | 'done';
 
-export default function PromptAmplifier() {
+export default function PromptAmplifierSection() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [source, setSource] = useState<'gemini' | 'groq' | 'template' | null>(null);
+  const [source, setSource] = useState<AmplificationSource | null>(null);
   
   // Clarifying questions state
   const [appState, setAppState] = useState<AppState>('input');
@@ -116,98 +115,111 @@ export default function PromptAmplifier() {
   const showClarifyingModal = appState === 'clarifying' && questions.length > 0;
 
   return (
-    <section className="py-section-mobile md:py-section bg-white">
+    <section className="py-section-mobile md:py-section bg-gradient-to-b from-gray-50 to-white">
+      {/* Clarifying Questions Modal */}
+      {showClarifyingModal && (
+        <ClarifyingQuestions
+          questions={questions}
+          onSubmit={handleQuestionsSubmit}
+          onSkip={handleQuestionsSkip}
+          isLoading={isLoading}
+        />
+      )}
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={zenVariants.staggerContainer}
+          className="text-center mb-12"
+        >
+          <motion.span
+            variants={zenVariants.staggerChild}
+            className="inline-block px-4 py-2 rounded-full bg-chisoku-cyan-50 border border-chisoku-cyan-100 text-chisoku-cyan-600 text-sm font-medium mb-4"
+          >
+            Free Tool
+          </motion.span>
+          <motion.h2
+            variants={zenVariants.staggerChild}
+            className="text-3xl font-bold sm:text-4xl text-chisoku-navy mb-4"
+          >
+            Prompt Amplifier
+          </motion.h2>
+          <motion.p
+            variants={zenVariants.staggerChild}
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
+          >
+            Transform vague ideas into comprehensive, actionable prompts. 
+            Our AI-powered tool helps you communicate more effectively with any LLM.
+          </motion.p>
+        </motion.div>
+
+        {/* Tool Interface */}
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={zenVariants.fadeInUp}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        >
+          {/* Input Panel */}
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+            <PromptInput
+              value={input}
+              onChange={setInput}
+              onAmplify={handleAmplify}
+              isLoading={isLoading || appState === 'clarifying'}
+            />
+            {clarifyingAnswers.length > 0 && (
+              <div className="mt-4 p-3 bg-chisoku-cyan-50 border border-chisoku-cyan-100 rounded-xl">
+                <p className="text-xs text-chisoku-cyan-700 mb-2 font-medium">
+                  Context added from your answers:
+                </p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {clarifyingAnswers.map((a, i) => (
+                    <li key={i} className="truncate">• {a}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Output Panel */}
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+            <AmplifiedOutput
+              output={output}
+              isLoading={isLoading && appState === 'amplifying'}
+              error={error}
+              source={source}
+              hasAnswers={clarifyingAnswers.length > 0}
+            />
+            <div className="mt-4 flex justify-between">
+              <CopyButton text={output} disabled={!output || isLoading} />
+              <button
+                onClick={handleClear}
+                disabled={(!input && !output) || isLoading}
+                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50
+                           text-gray-600 text-sm font-medium rounded-xl transition-colors
+                           disabled:cursor-not-allowed disabled:text-gray-300"
+              >
+                Clear All
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Disclaimer */}
         <motion.div
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={zenVariants.fadeInUp}
         >
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-block px-4 py-2 rounded-full bg-chisoku-cyan-50 border border-chisoku-cyan-200 text-chisoku-cyan-600 text-sm font-medium mb-4">
-              Interactive Tool
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-chisoku-navy mb-3">
-              Prompt Amplifier
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Transform vague ideas into comprehensive, actionable prompts using AI-powered amplification
-            </p>
-          </div>
-
-          {/* Clarifying Questions Modal */}
-          {showClarifyingModal && (
-            <ClarifyingQuestions
-              questions={questions}
-              onSubmit={handleQuestionsSubmit}
-              onSkip={handleQuestionsSkip}
-              isLoading={isLoading}
-            />
-          )}
-
-          {/* Main Tool */}
-          <Card variant="elevated" className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[500px] mb-6">
-              {/* Left: Input */}
-              <div className="space-y-4 flex flex-col">
-                <div className="flex-1 min-h-0">
-                  <PromptInput
-                    value={input}
-                    onChange={setInput}
-                    onAmplify={handleAmplify}
-                    isLoading={isLoading || appState === 'clarifying'}
-                  />
-                </div>
-                {clarifyingAnswers.length > 0 && (
-                  <div className="mt-4 p-3 bg-chisoku-cyan-50 border border-chisoku-cyan-200 rounded-lg flex-shrink-0">
-                    <p className="text-xs text-chisoku-cyan-600 mb-2 font-medium">
-                      ✓ Context added from your answers:
-                    </p>
-                    <ul className="text-sm text-chisoku-navy space-y-1">
-                      {clarifyingAnswers.map((a, i) => (
-                        <li key={i} className="truncate">• {a}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Right: Output */}
-              <div className="space-y-4 flex flex-col min-h-0">
-                <div className="flex-1 min-h-0">
-                  <AmplifiedOutput
-                    output={output}
-                    isLoading={isLoading && appState === 'amplifying'}
-                    error={error}
-                    source={source}
-                    hasAnswers={clarifyingAnswers.length > 0}
-                  />
-                </div>
-                {(input || output) && (
-                  <div className="flex justify-end items-center pt-2 flex-shrink-0">
-                    <Button
-                      onClick={handleClear}
-                      disabled={isLoading}
-                      variant="ghost"
-                      size="sm"
-                    >
-                      Clear All
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Disclaimer - moved outside grid with proper spacing */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <Disclaimer />
-            </div>
-          </Card>
+          <Disclaimer />
         </motion.div>
       </div>
     </section>
   );
 }
-

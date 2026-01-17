@@ -1,55 +1,54 @@
 'use client';
 
+import { AmplificationSource } from '@/lib/prompt-amplifier/promptAmplifier';
+
 interface SourceIndicatorProps {
-  source: 'gemini' | 'groq' | 'template' | null;
+  source: AmplificationSource | null;
   hasAnswers: boolean;
 }
 
 export default function SourceIndicator({ source, hasAnswers }: SourceIndicatorProps) {
   if (!source) return null;
 
-  const getSourceLabel = () => {
+  const getSourceStyle = () => {
     switch (source) {
       case 'gemini':
-        return '✨ Gemini AI';
+        return 'bg-chisoku-cyan-50 text-chisoku-cyan-700 border border-chisoku-cyan-200';
       case 'groq':
-        return '✨ Groq AI';
+        return 'bg-purple-50 text-purple-700 border border-purple-200';
       case 'template':
-        return '📝 Template Based';
+        return 'bg-amber-50 text-amber-700 border border-amber-200';
       default:
-        return '';
+        return 'bg-gray-50 text-gray-700 border border-gray-200';
     }
   };
 
-  const getSourceStyles = () => {
+  const getSourceLabel = () => {
     switch (source) {
       case 'gemini':
-        return 'bg-chisoku-cyan-50 text-chisoku-cyan-600 border border-chisoku-cyan-200';
+        return 'Gemini AI';
       case 'groq':
-        return 'bg-purple-50 text-purple-600 border border-purple-200';
+        return 'Groq AI';
       case 'template':
-        return 'bg-yellow-50 text-yellow-600 border border-yellow-200';
+        return 'Template';
       default:
-        return '';
+        return 'Unknown';
     }
   };
 
   return (
     <div className="flex flex-wrap items-center gap-2 text-xs">
       {/* Generation Source */}
-      <span 
-        className={`px-2 py-1 rounded ${getSourceStyles()}`}
-      >
-        {getSourceLabel()}
+      <span className={`px-2 py-1 rounded-lg font-medium ${getSourceStyle()}`}>
+        {source === 'template' ? '📝' : '✨'} {getSourceLabel()}
       </span>
       
       {/* Context Indicator */}
       {hasAnswers && (
-        <span className="px-2 py-1 rounded bg-blue-50 text-blue-600 border border-blue-200">
-          📋 With your context
+        <span className="px-2 py-1 rounded-lg bg-chisoku-navy/5 text-chisoku-navy border border-chisoku-navy/10 font-medium">
+          📋 With context
         </span>
       )}
     </div>
   );
 }
-
