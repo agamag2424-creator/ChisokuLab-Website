@@ -64,8 +64,14 @@ export default function LatestVideos() {
               >
                 <Card variant="elevated" className="h-full group hover:border-chisoku-cyan-500 transition-colors">
                   <div className="space-y-4">
-                    {/* Video Thumbnail */}
-                    <div className="relative aspect-video rounded-lg bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+                    {/* Video Thumbnail - Clickable */}
+                    <a
+                      href={`https://youtube.com/watch?v=${video.youtubeId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block relative aspect-video rounded-lg bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform cursor-pointer"
+                      aria-label={`Play ${video.title}`}
+                    >
                       {!video.youtubeId.startsWith("placeholder") && (
                         <img
                           src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
@@ -74,14 +80,14 @@ export default function LatestVideos() {
                         />
                       )}
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:bg-white transition-colors shadow-lg">
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all shadow-lg">
                           <Play className="w-8 h-8 text-chisoku-cyan-500 ml-1" />
                         </div>
                       </div>
                       <div className="absolute bottom-2 right-2 px-2 py-1 rounded bg-black/70 text-white text-xs">
                         {video.duration}
                       </div>
-                    </div>
+                    </a>
                     <h3 className="text-xl font-semibold text-chisoku-navy group-hover:text-chisoku-cyan-500 transition-colors">
                       {video.title}
                     </h3>
