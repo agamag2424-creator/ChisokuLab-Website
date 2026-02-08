@@ -10,7 +10,7 @@ const videos = [
     title: "Introduction to Chisoku: Calm Decision-Making",
     description:
       "Learn the fundamentals of Chisoku and how to apply calm decision-making principles to your work.",
-    youtubeId: "placeholder-1",
+    youtubeId: "49UCFmteHqE",
     duration: "12:34",
   },
   {
@@ -66,8 +66,15 @@ export default function LatestVideos() {
                   <div className="space-y-4">
                     {/* Video Thumbnail */}
                     <div className="relative aspect-video rounded-lg bg-gradient-to-br from-chisoku-cyan-500/20 to-chisoku-cyan-900/20 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+                      {!video.youtubeId.startsWith("placeholder") && (
+                        <img
+                          src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
+                          alt={video.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      )}
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:bg-white transition-colors">
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:bg-white transition-colors shadow-lg">
                           <Play className="w-8 h-8 text-chisoku-cyan-500 ml-1" />
                         </div>
                       </div>
