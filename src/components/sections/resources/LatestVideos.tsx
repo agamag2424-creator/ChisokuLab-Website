@@ -24,7 +24,7 @@ const videos = [
     title: "Ancient Decision Frameworks for Modern Leaders",
     description:
       "Exploring how time-tested frameworks (used by leaders for 3,000 years) apply to AI-era leadership challenges.",
-    youtubeId: "placeholder-3",
+    youtubeId: "67-i6pwMRow",
     duration: "18:45",
   },
 ];
