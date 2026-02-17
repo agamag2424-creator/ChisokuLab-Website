@@ -91,9 +91,15 @@ export default function CourseHero() {
             <Button variant="primary" size="lg" onClick={scrollToPricing}>
               Join Waitlist
             </Button>
-            <Button variant="secondary" size="lg">
+            <a
+              href="/downloads/syllabus.pdf"
+              download="ChisokuLab_UnshakeableDecisions_Syllabus.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center h-14 px-8 text-lg font-medium rounded-lg border-2 border-chisoku-cyan-500 text-chisoku-cyan-500 bg-transparent hover:bg-chisoku-cyan-500 hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-chisoku-cyan-500 focus:ring-offset-2"
+            >
               Download Syllabus
-            </Button>
+            </a>
           </motion.div>
         </motion.div>
       </div>

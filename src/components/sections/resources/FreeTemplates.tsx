@@ -9,20 +9,26 @@ const templates = [
   {
     title: "AI Tool Evaluation Checklist",
     description:
-      "A comprehensive checklist to evaluate AI tools before adoption. Includes criteria for functionality, security, cost, and team fit.",
+      "A comprehensive checklist to evaluate AI tools before adoption. Includes criteria for functionality, security, cost, and team fit. Personal and Enterprise versions in one download.",
     icon: FileText,
+    downloadUrl: "/downloads/ChisokuLab_AITool_Evaluation_Checklist.pdf",
+    downloadFilename: "ChisokuLab_AITool_Evaluation_Checklist.pdf",
   },
   {
     title: "Decision-Making Framework Template",
     description:
       "A structured template for making important decisions. Uses a proven 4-question framework to help you think through options systematically and avoid common decision-making pitfalls.",
     icon: FileText,
+    downloadUrl: "/downloads/ChisokuLab_DecisionMaking_Framework.pdf",
+    downloadFilename: "ChisokuLab_DecisionMaking_Framework.pdf",
   },
   {
     title: "Team AI Readiness Assessment",
     description:
       "A self-assessment tool to evaluate your team's readiness for AI adoption. Identify strengths and areas for improvement.",
     icon: FileText,
+    downloadUrl: "/downloads/ChisokuLab_Team_AI_Readiness_Assessment.pdf",
+    downloadFilename: "ChisokuLab_Team_AI_Readiness_Assessment.pdf",
   },
 ];
 
@@ -72,16 +78,16 @@ export default function FreeTemplates() {
                       <p className="text-gray-600 leading-relaxed">
                         {template.description}
                       </p>
-                      <button
-                        onClick={() => {
-                          // In production, this would download the actual template
-                          alert("Template download coming soon!");
-                        }}
+                      <a
+                        href={template.downloadUrl}
+                        download={template.downloadFilename}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm font-medium text-chisoku-cyan-500 hover:text-chisoku-cyan-600 group-hover:underline"
                       >
                         <Download className="w-4 h-4" />
                         Download Template
-                      </button>
+                      </a>
                     </div>
                   </Card>
                 </motion.div>

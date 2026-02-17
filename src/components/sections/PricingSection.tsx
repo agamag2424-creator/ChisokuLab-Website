@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Shield } from "lucide-react";
 import Card from "@/components/ui/Card";
@@ -18,6 +19,40 @@ const features = [
 ];
 
 export default function PricingSection() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "course-waitlist" }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setIsSubmitted(true);
+        setEmail("");
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setError(result.error || "Failed to join waitlist. Please try again.");
+      }
+    } catch {
+      setError("Failed to join waitlist. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section
       id="pricing"
@@ -72,19 +107,40 @@ export default function PricingSection() {
                 </ul>
               </div>
 
-              {/* CTA */}
+              {/* CTA - Email Waitlist */}
               <div className="mb-6">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => {
-                    // TODO: Replace with actual waitlist/Gumroad link
-                    window.open("https://gumroad.com/placeholder", "_blank");
-                  }}
-                >
-                  Join Waitlist
-                </Button>
+                {isSubmitted ? (
+                  <p className="text-chisoku-cyan-600 font-medium" role="status">
+                    You&apos;re on the list! Check your email to confirm.
+                  </p>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-3">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={isSubmitting}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 text-chisoku-navy placeholder-gray-400 focus:border-chisoku-cyan-500 focus:outline-none focus:ring-2 focus:ring-chisoku-cyan-500/20 disabled:opacity-50"
+                      required
+                      aria-label="Email for waitlist"
+                    />
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="lg"
+                      className="w-full"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Joining..." : "Join Waitlist"}
+                    </Button>
+                  </form>
+                )}
+                {error && (
+                  <p className="mt-2 text-sm text-red-600" role="alert">
+                    {error}
+                  </p>
+                )}
               </div>
 
               {/* Guarantee Badge */}
