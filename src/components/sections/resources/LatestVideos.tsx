@@ -14,13 +14,6 @@ const videos = [
     duration: "12:34",
   },
   {
-    title: "5 AI Tools Every Manager Needs",
-    description:
-      "A practical overview of essential AI tools for managers, plus how to choose which ones to adopt.",
-    youtubeId: "placeholder-2",
-    duration: "15:20",
-  },
-  {
     title: "Ancient Decision Frameworks for Modern Leaders",
     description:
       "Exploring how time-tested frameworks (used by leaders for 3,000 years) apply to AI-era leadership challenges.",
@@ -55,7 +48,7 @@ export default function LatestVideos() {
           </motion.div>
 
           {/* Videos Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {videos.map((video, index) => (
               <motion.div
                 key={video.youtubeId}

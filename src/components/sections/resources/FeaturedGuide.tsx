@@ -111,18 +111,17 @@ export default function FeaturedGuide() {
                       Guide Unlocked!
                     </h3>
                     <p className="text-gray-600">
-                      Check your email for the download link. The guide will
-                      arrive within a few minutes.
+                      Download your guide below.
                     </p>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        // In production, this would download the actual PDF
-                        alert("Download link sent to your email!");
-                      }}
+                    <a
+                      href="/downloads/ChisokuLab_Unshakeable_Managers_Guide.pdf"
+                      download="ChisokuLab_Unshakeable_Managers_Guide.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center h-14 px-8 text-lg font-medium rounded-lg bg-chisoku-cyan-500 text-white hover:bg-chisoku-cyan-600 shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-chisoku-cyan-500 focus:ring-offset-2"
                     >
                       Download Guide
-                    </Button>
+                    </a>
                   </div>
                 ) : (
                   <div className="p-8 border-2 border-gray-200 rounded-lg bg-gray-50">
