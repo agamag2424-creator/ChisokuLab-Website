@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { zenVariants } from "@/lib/animations";
@@ -18,11 +19,15 @@ export default function AboutPreview() {
             variants={zenVariants.fadeInUp}
             className="lg:col-span-2"
           >
-            <div className="relative aspect-square rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden" role="img" aria-label="Photo of Agam Agrawal, founder of ChisokuLab">
-              <div className="text-center p-8">
-                <div className="w-32 h-32 mx-auto rounded-full bg-chisoku-cyan-500/20 border-4 border-chisoku-cyan-500/30 mb-4" aria-hidden="true" />
-                <p className="text-gray-600 font-medium" aria-hidden="true">Photo of Agam</p>
-              </div>
+            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/agam-photo.png"
+                alt="Agam Agrawal, founder of ChisokuLab"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 512px"
+                priority
+              />
             </div>
           </motion.div>
 
