@@ -21,7 +21,7 @@ const footerNavigation = {
 const socialLinks = [
   {
     name: "Twitter",
-    href: "https://twitter.com/chisokulab",
+    href: "https://twitter.com/chisokulabs",
     icon: Twitter,
   },
   {

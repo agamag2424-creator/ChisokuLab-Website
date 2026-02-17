@@ -23,7 +23,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const socialLinks = [
   {
     name: "Twitter",
-    href: "https://twitter.com/chisokulab",
+    href: "https://twitter.com/chisokulabs",
     icon: Twitter,
   },
   {

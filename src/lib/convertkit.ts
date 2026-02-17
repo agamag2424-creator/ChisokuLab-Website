@@ -51,10 +51,22 @@ export async function subscribeToNewsletter(
   });
 
   if (!CONVERTKIT_API_KEY || !CONVERTKIT_FORM_ID) {
+    const isProduction =
+      process.env.NODE_ENV === "production" || !!process.env.VERCEL;
+    if (isProduction) {
+      console.error(
+        "ConvertKit API key or Form ID not configured in production."
+      );
+      return {
+        success: false,
+        error:
+          "Newsletter signup is not configured. Please try again later or contact us.",
+      };
+    }
+    // In development only: return mock success so the UI can be tested
     console.warn(
       "ConvertKit API key or Form ID not configured. Using mock response."
     );
-    // Return mock success for development
     return {
       success: true,
       data: {
