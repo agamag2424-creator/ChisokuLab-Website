@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Mail, Clock, Twitter, Linkedin, Github, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Clock, Twitter, Linkedin, Send, CheckCircle2 } from "lucide-react";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import Button from "@/components/ui/Button";
@@ -28,13 +28,8 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/company/chisokulab",
+    href: "https://www.linkedin.com/company/chisoku-labs-pvt-ltd",
     icon: Linkedin,
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/chisokulab",
-    icon: Github,
   },
 ];
 

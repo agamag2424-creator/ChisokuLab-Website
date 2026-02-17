@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Twitter, Linkedin, Github } from "lucide-react";
+import { Mail, Twitter, Linkedin } from "lucide-react";
 
 const footerNavigation = {
   main: [
@@ -26,13 +26,8 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/company/chisokulab",
+    href: "https://www.linkedin.com/company/chisoku-labs-pvt-ltd",
     icon: Linkedin,
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/chisokulab",
-    icon: Github,
   },
 ];
 
