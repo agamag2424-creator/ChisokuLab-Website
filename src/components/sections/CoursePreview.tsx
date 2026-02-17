@@ -10,62 +10,62 @@ import {
 import { zenVariants } from "@/lib/animations";
 
 const modules = [
-    {
-      number: 1,
+  {
+    number: 1,
     title: "The Decision Fatigue Crisis",
-    duration: "35 min",
-      description:
+    duration: "43 min",
+    description:
       "Understanding why AI creates more decisions, not fewer. Learn to identify the three types of managerial decisions: strategic (your core role), operational (delegatable), and mechanical (automatable).",
-    deliverable: "Decision Audit Worksheet",
-    },
-    {
-      number: 2,
+    deliverable: "Decision Audit Worksheet + Three Types Framework Template",
+  },
+  {
+    number: 2,
     title: "The Clarity Filter Framework",
-    duration: "40 min",
-      description:
+    duration: "44 min",
+    description:
       "A simple 4-question tool that cuts through complexity in 60 seconds. Learn when most decision frameworks fail and how to apply this filter to AI-related choices in real-time.",
-    deliverable: "Clarity Filter Decision Template",
-    },
-    {
-      number: 3,
+    deliverable: "Clarity Filter Pocket Card + Decision Scenario Practice Workbook",
+  },
+  {
+    number: 3,
     title: "The Energy Audit",
-    duration: "35 min",
-      description:
+    duration: "~40 min",
+    description:
       "Recognize your three decision-making modes: Clarity Mode (best decisions), Reactive Mode (ego-driven, rushed), and Avoidance Mode (fear-based, inertia). Learn to diagnose and shift your state.",
-    deliverable: "Decision Mode Self-Assessment",
-    },
-    {
-      number: 4,
+    deliverable: "Energy Audit Map + Weekly Decision Window Planner",
+  },
+  {
+    number: 4,
     title: "The Detachment Principle",
-    duration: "40 min",
-      description:
+    duration: "~38 min",
+    description:
       "The paradox of leadership: care deeply about outcomes while remaining unshaken by them. Learn why managers burn out and how to lead your team through uncertainty without anxiety.",
-    deliverable: "Detachment Practice Log",
-    },
-    {
-      number: 5,
+    deliverable: "Detachment Decision Journal + Stakeholder Pressure Response Scripts",
+  },
+  {
+    number: 5,
     title: "Building Decision Resilience",
-    duration: "30 min",
-      description:
+    duration: "~42 min",
+    description:
       "Daily practices for maintaining steady judgment under pressure. Learn the Observer Technique for reactive moments and evidence-based routines that take just 5-10 minutes per day.",
-    deliverable: "30-Day Resilience Tracker",
-    },
-    {
-      number: 6,
+    deliverable: "90-Day Decision Resilience Tracker + Weekly Review Template",
+  },
+  {
+    number: 6,
     title: "Human Decisions in an AI World",
-      duration: "45 min",
-      description:
+    duration: "~45 min",
+    description:
       "Which decisions AI should never make (people, ethics, strategy, relationships) and how to build ethical human-AI workflows. Includes scripts for the automation conversation with your team.",
-    deliverable: "AI Boundaries Template + Team Communication Scripts",
-    },
-    {
-      number: 7,
-    title: "The Source",
-    duration: "30 min",
-      description:
+    deliverable: "Personal AI Workflow Blueprint + AI Decision Charter Template",
+  },
+  {
+    number: 7,
+    title: "The Source — Ancient Wisdom for Modern Decisions",
+    duration: "~40 min",
+    description:
       "Where these frameworks originated and how to go deeper. Discover the ancient texts that have guided leaders for 3,000 years and learn how to make these practices your own.",
-    deliverable: "Further Learning Resources",
-    },
+    deliverable: "Personal Decision Manifesto Template + Recommended Reading & Practice Guide",
+  },
 ];
 
 export default function CoursePreview() {

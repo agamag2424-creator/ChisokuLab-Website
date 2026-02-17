@@ -8,9 +8,9 @@ import Button from "@/components/ui/Button";
 import { zenVariants } from "@/lib/animations";
 
 const features = [
-  "7 focused decision framework modules",
-  "~4 hours of video content (binge-able or self-paced)",
-  "All templates, worksheets, and frameworks",
+  "7 complete decision framework modules (50+ short video chapters)",
+  "~5 hours of video content (binge-able or self-paced)",
+  "14+ downloadable templates, worksheets, and frameworks",
   "Lifetime course access and updates",
   "Monthly live Q&A sessions (starting at launch)",
   "Private community access (launching with course)",
@@ -77,15 +77,22 @@ export default function PricingSection() {
 
               {/* Price */}
               <div className="mb-8">
-                <div className="flex items-baseline justify-center gap-3">
-                  <span className="text-5xl font-bold text-amber-600">
-                    ₹15,000
-                  </span>
-                  <span className="text-xl text-gray-400 line-through">
-                    ₹25,000
-                  </span>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex items-baseline justify-center gap-3">
+                    <span className="text-5xl font-bold text-amber-600">
+                      ₹2,999
+                    </span>
+                    <span className="text-xl text-gray-400 line-through">
+                      ₹4,999
+                    </span>
+                  </div>
+                  <p className="mt-1 text-gray-600">
+                    Early bird waitlist price (full price at launch: ₹4,999 / $59 USD)
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Approx. $39 USD early bird when converted.
+                  </p>
                 </div>
-                <p className="mt-2 text-gray-600">One-time payment</p>
               </div>
 
               {/* Features */}

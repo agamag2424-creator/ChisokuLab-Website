@@ -13,7 +13,7 @@ const faqs = [
       {
         question: "What's included in the course?",
         answer:
-          "The course includes 7 comprehensive modules covering AI efficiency and Hindu decision science, ~4 hours of video content, all templates and frameworks, private community access (launching with course), lifetime course access, monthly live Q&A sessions (starting at launch), and a certificate of completion.",
+          "The course includes 7 comprehensive modules covering AI efficiency and Hindu decision science, ~5 hours of video content across 50+ short lessons, 14+ downloadable templates and frameworks, private community access (launching with course), lifetime course access, monthly live Q&A sessions (starting at launch), and a certificate of completion.",
       },
       {
         question: "How long does it take to complete the course?",

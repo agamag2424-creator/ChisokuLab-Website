@@ -7,7 +7,7 @@ import { zenVariants } from "@/lib/animations";
 
 const stats = [
   { icon: BookOpen, label: "Modules", value: "7" },
-  { icon: Clock, label: "Hours", value: "~4" },
+  { icon: Clock, label: "Hours", value: "~5" },
   { icon: Infinity, label: "Lifetime Access", value: "∞" },
   { icon: RefreshCw, label: "Updates Forever", value: "Free" },
 ];
